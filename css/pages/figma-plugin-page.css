@@ -1,0 +1,292 @@
+/* figma-plugin-page.css - Styles specific to the UX Flow Logic plugin page */
+
+/* Push theme toggle to the right side when there's no branding */
+.header-nav {
+    margin-left: auto;
+}
+
+/* Hero title with leading image */
+.hero-title-container {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.icon-leading-hero-title {
+    width: auto;
+    height: 3rem;
+    flex-shrink: 0;
+    display: block;
+    margin: 0;
+}
+
+/* Content sections spacing */
+.content-section {
+    margin-bottom: var(--spacing-2xl);
+}
+
+/* =============================================================================
+   HEADER BRANDING - Logo leading the site title
+   Same pattern as "Hero title with leading image" above, sized for the
+   header context instead of the page hero.
+   ============================================================================= */
+
+.site-title-icon-lead {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2em;
+}
+
+.icon-leading-site-title {
+    height: 0.75em;
+    width: auto;
+    flex-shrink: 0;
+    display: block;
+    margin: 0;
+}
+
+/* =============================================================================
+   HEADER NAVIGATION - Stacked layout variant
+   This page stacks the nav under the branding (title + subtitle) instead of
+   the shared single-row layout used elsewhere (nav beside the theme toggle).
+   ============================================================================= */
+
+/* Left-align the nav under the subtitle - desktop only. Below the shared
+   60em stacking breakpoint, hand off to responsive.css's own centering
+   behavior (.nav-list { justify-content: center }) instead of permanently
+   overriding it - this is what lets the nav and toggle both center
+   properly once the header stacks into a single column. */
+@media (min-width: 60.0625em) {
+    .header-nav-left {
+        justify-content: flex-start;
+    }
+}
+
+.header-nav-left {
+    margin-top: var(--spacing-sm);
+    /* .nav-link--compact's own left padding (--spacing-sm) pushes the first
+       item's visible text that far right of the list's edge. Shift the
+       whole row left by the same amount so "Overview" sits flush with the
+       logo/subtitle above it, rather than visually indented. */
+    margin-left: calc(-1 * var(--spacing-sm));
+}
+
+/* The site-wide default (nav { margin-bottom: var(--spacing-md); }, defined
+   elsewhere - not in any file shared so far) adds space below every <nav>,
+   sized for the default single-row layout. When a <nav> wraps the compact
+   variant instead, that margin should be spacing-sm, not spacing-md. Using
+   :has() to condition this on the compact list actually being present means
+   the default stays untouched everywhere else, and this wins by
+   specificity rather than depending on file load order. */
+nav:has(.nav-list--compact) {
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Extra-small breakpoint: once the nav wraps across multiple lines, the
+   theme toggle (pushed right via .header-nav's margin-left: auto above)
+   can overlap the last nav item instead of wrapping cleanly. Force the
+   toggle onto its own full-width, centered line here instead, matching
+   how the header stacks on other pages at small widths.
+
+   60em (not 40em) matches the breakpoint responsive.css already uses to
+   switch .header-content to flex-direction: column - reusing the same
+   breakpoint keeps this in sync with the shared stacking behavior instead
+   of introducing a second, competing threshold. */
+@media (max-width: 60em) {
+    .header-nav {
+        margin-left: 0;
+        justify-content: center;
+    }
+}
+
+/* responsive.css's "Enhanced touch targets" rule re-applies a 44px
+   min-height + padding to the shared .nav-link at max-width: 40em, which
+   silently overrides our .nav-link--compact since it loads later in the
+   same styles.css bundle. Re-assert the compact padding here (this file
+   loads after styles.css, so it wins) to keep the compact variant compact
+   at every breakpoint, not just desktop widths. */
+@media (max-width: 40em) {
+    .nav-link--compact {
+        padding: 0 var(--spacing-sm);
+        min-height: 0;
+        min-width: 0;
+    }
+}
+
+/* The header's own bottom padding (layout.css: padding: var(--spacing-sm) 0)
+   plus the nav's touch-target height stacked on top of it read as too much
+   space above the header's border-bottom when the nav sits alone on its own
+   stacked row. Tighten the header's bottom padding here instead - but only
+   at desktop widths. Below the 60em stacking breakpoint, the theme toggle
+   (not the nav) ends up at the bottom of the header instead, and it needs
+   the site's normal padding-bottom for the same breathing room every other
+   page keeps at small breakpoints - zeroing it there made the toggle touch
+   the border-bottom directly. */
+@media (min-width: 60.0625em) {
+    .header--tight-bottom {
+        padding-bottom: 0;
+    }
+}
+
+/* Responsive adjustments for leading icon */
+@media (max-width: 40em) {
+    .icon-leading-hero-title {
+        height: 2.5rem;
+    }
+    
+    .hero-title-container {
+        gap: var(--spacing-sm);
+    }
+}
+
+/* =============================================================================
+   "WHY THIS TOOL EXISTS" - two-column text/image layout
+   ============================================================================= */
+
+/* layout.css's .content-with-image sets up the flex row and gap, but
+   doesn't give .content-text/.content-image any explicit sizing - without
+   it, both would just shrink-to-fit their content instead of forming a
+   predictable two-column split. Scoped by id since other pages use
+   .content-image without a .content-text sibling (a single image inside
+   list text), where this sizing wouldn't apply. */
+#why-tool-exists-media .content-text,
+#why-tool-exists-media .content-image {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Force top-alignment explicitly - .content-with-image already sets
+   align-items: flex-start in layout.css, but this guarantees the image
+   stays pinned to the top of the row (rather than centering against the
+   taller text column) regardless of what else might affect it. */
+#why-tool-exists-media {
+    align-items: flex-start;
+}
+
+#why-tool-exists-media .content-image {
+    align-self: flex-start;
+}
+
+/* Below the shared 60em stacking breakpoint, responsive.css gives
+   .content-text an explicit order: 1 - but sets no order on
+   .content-image, which defaults to order: 0 and would render ABOVE the
+   text once stacked, not below. Give the image order: 2 here so it
+   settles at the bottom, as this section needs. Scoped by id so the
+   other .content-image usage elsewhere keeps its current (undefined,
+   effectively source-order) stacking behavior. */
+@media (max-width: 60em) {
+    #why-tool-exists-media .content-image {
+        order: 2;
+    }
+}
+
+/* =============================================================================
+   "FLOW DIAGRAM SHAPE COMPONENTS" - two-column text/image layout
+   Same pattern as "why-tool-exists-media" above: layout.css's
+   .content-with-image sets up the flex row and gap, but doesn't size
+   .content-text/.content-image on its own. Scoped by id so the plain
+   .content-image usage elsewhere (no .content-text sibling) is unaffected.
+   ============================================================================= */
+
+#flow-diagram-components-media .content-text,
+#flow-diagram-components-media .content-image {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Force top-alignment explicitly, matching #why-tool-exists-media - keeps
+   the image pinned to the top of the row rather than centering against
+   the taller text column. */
+#flow-diagram-components-media {
+    align-items: flex-start;
+}
+
+#flow-diagram-components-media .content-image {
+    align-self: flex-start;
+}
+
+/* Below the shared 60em stacking breakpoint, responsive.css gives
+   .content-text an explicit order: 1 but leaves .content-image at the
+   default order: 0, which would stack it ABOVE the text once the columns
+   collapse. Give it order: 2 here so the image settles below the list,
+   matching the reflow behavior used for #why-tool-exists-media. */
+@media (max-width: 60em) {
+    #flow-diagram-components-media .content-image {
+        order: 2;
+    }
+}
+/* =============================================================================
+   THREE-COLUMN APPROACH - bordered diagram-style layout
+   Mirrors the plugin's own flow diagram layout: narrower, shaded side
+   columns (Summary / Details) flanking a wider, unshaded center column
+   (Numbered steps). Genuinely new layout (not a two-column text/image
+   split like the patterns above), so it gets its own scoped block rather
+   than reusing content-with-image.
+   ============================================================================= */
+
+.three-column-layout {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.three-column {
+    padding: var(--spacing-lg);
+    border-right: 1px solid var(--color-border-primary);
+}
+
+.three-column:last-child {
+    border-right: none;
+}
+
+/* Headings inherit the site's standard top margin, which is sized for
+   headings that follow other body copy - inside a bordered column, that
+   reads as too much dead space above the first line of content. Zero it
+   out here so the heading sits close to the column's own top padding. */
+.three-column h2 {
+    margin-top: 0;
+}
+
+/* Left and right columns: equal width, shaded to read as "side panels" -
+   matching the plugin's own trigger/assumptions and step-detail panels. */
+.three-column--side {
+    flex: 1 1 0;
+    min-width: 0;
+    background-color: var(--color-background-secondary);
+}
+
+/* Center column: wider than each side column, and left unshaded so the
+   page's own background shows through - same visual relationship as the
+   plugin's canvas area between its two side panels. */
+.three-column--center {
+    flex: 2 1 0;
+    min-width: 0;
+    text-align: center;
+}
+
+/* Below the site's shared 60em stacking breakpoint, the columns no longer
+   have room for generous padding - tighten it so three columns can still
+   sit in a row rather than needing to wrap or stack. */
+@media (max-width: 60em) {
+    .three-column {
+        padding: var(--spacing-md);
+    }
+}
+
+/* At phone widths, drop the center column's extra width so all three
+   columns stay equal and legible in a single row, rather than letting the
+   center column keep squeezing the side columns down further. */
+@media (max-width: 40em) {
+    .three-column {
+        padding: var(--spacing-sm);
+    }
+
+    .three-column--center {
+        flex: 1 1 0;
+    }
+}

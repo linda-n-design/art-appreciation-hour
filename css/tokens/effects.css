@@ -1,0 +1,208 @@
+/* =============================================================================
+   EFFECTS.CSS - Visual Effects Design Tokens
+   =============================================================================
+   This file contains all visual effect tokens including:
+   - Shadows (elevation system)
+   - Border radius
+   - Transitions
+   - Z-index scale
+   - Lightbox-specific dimensions
+   ============================================================================= */
+
+:root {
+    /* =========================================================================
+       SHADOWS / ELEVATION SYSTEM
+       
+       Shadows create visual hierarchy and depth.
+       Higher elevation = more prominent shadow = higher in visual stack
+       ========================================================================= */
+    
+    /* Level 0 - No elevation (flat) */
+    --shadow-none: none;
+    
+    /* Inner shadow - used for pressed/active states (e.g., active tabs) */
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    
+    /* Level 1 - Subtle elevation (cards, buttons at rest) */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    /* Level 2 - Medium elevation (hover states, dropdowns) */
+    --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.15);
+    
+    /* Level 3 - High elevation (modals, popovers) */
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.2);
+    
+    /* Level 4 - Highest elevation (lightbox, overlays) */
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.4);
+    
+    /* =========================================================================
+       INFOTIP TIP DIMENSIONS
+       
+       Component-specific tokens for infotip tip (pointer) dimensions.
+       JavaScript reads these values for accurate positioning calculations.
+       Single source of truth for all tip-related measurements.
+       ========================================================================= */
+    
+    --infotip-tip-height: 12px;      /* Height of top/bottom pointing tips */
+    --infotip-tip-width: 12px;       /* Width of left/right pointing tips */
+    --infotip-tip-offset: 11px;      /* How far tip extends outside container */
+    --infotip-tip-spacing: 8px;      /* Minimum gap between trigger and tip */
+    
+    /* =========================================================================
+       BORDERS
+       
+       Consistent border widths and styles throughout the design.
+       All borders in this design system use solid style.
+       ========================================================================= */
+    
+    /* Border Widths */
+    --border-width-thin: 1px;      /* Subtle borders - cards, inputs, dividers */
+    --border-width-medium: 2px;    /* Medium emphasis - lightbox, skip-link */
+    --border-width-thick: 3px;     /* Strong emphasis - active tabs, focus rings, profile card */
+    
+    /* Border Styles */
+    --border-style-solid: solid;
+    --border-style-dashed: dashed;
+    
+    /* Pre-composed Border Shorthand Tokens */
+    --border-thin: var(--border-width-thin) var(--border-style-solid) var(--color-border-primary);
+    --border-medium: var(--border-width-medium) var(--border-style-solid) var(--color-border-primary);
+    --border-thick: var(--border-width-thick) var(--border-style-solid) var(--color-border-primary);
+    
+    /* Muted border variant (for subtle dividers) */
+    --border-thin-muted: var(--border-width-thin) var(--border-style-solid) var(--color-border-muted);
+    
+    /* Dashed border variant (for drag zones, drop areas) */
+    --border-dashed: var(--border-width-medium) var(--border-style-dashed) var(--color-border-primary);
+    
+    /* =========================================================================
+       BORDER RADIUS
+       
+       Consistent corner rounding throughout the design
+       ========================================================================= */
+    
+    /* Small radius - subtle rounding */
+    --radius-sm: 4px;
+    
+    /* Medium radius - buttons, links, moderate rounding */
+    --radius-md: 6px;
+    
+    /* Large radius - tiles, containers, inputs, cards */
+    --radius-lg: 8px;
+    
+    /* Fully round - avatars, circular buttons */
+    --radius-full: 50%;
+    
+    /* =========================================================================
+       TRANSITIONS
+       
+       Consistent animation timing for smooth interactions
+       ========================================================================= */
+    
+    /* Fast - hover states, color changes */
+    --transition-fast: 0.3s ease;
+    
+    /* Medium - transforms, expanding elements */
+    --transition-medium: 0.4s ease;
+    
+    /* Slow - page transitions, complex animations */
+    --transition-slow: 0.6s ease;
+    
+    /* Specific easing functions */
+    --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+    --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+    
+    /* =========================================================================
+       Z-INDEX SCALE
+       
+       Layering system for stacking context management
+       Use these instead of arbitrary z-index values
+       ========================================================================= */
+    
+    /* Below content - backgrounds, decorative elements */
+    --z-below: -1;
+    
+    /* Base level - regular content */
+    --z-base: 0;
+    
+    /* Slightly elevated - sticky elements, raised cards */
+    --z-raised: 10;
+    
+    /* Navigation level - sticky headers, nav bars */
+    --z-navigation: 100;
+    
+    /* Dropdown level - menus, popovers */
+    --z-dropdown: 200;
+    
+    /* Sticky header level - page headers, dialog headers, panel headers */
+    --z-sticky-header: 250;
+    
+    /* Sticky elements - table headers, fixed sidebars */
+    --z-sticky: 300;
+    
+    /* Fixed elements - back-to-top buttons */
+    --z-fixed: 999;
+    
+    /* Overlay level - modal backdrops */
+    --z-overlay: 9999;
+    
+    /* Modal level - dialogs, lightboxes */
+    --z-modal: 99999;
+    
+    /* Toast/notification level - highest priority */
+    --z-toast: 999999;
+    
+    /* =========================================================================
+       LIGHTBOX-SPECIFIC TOKENS
+       
+       Dimensions and layout values for the lightbox component
+       ========================================================================= */
+    
+    --lightbox-z-index: var(--z-modal);
+    --lightbox-padding: var(--spacing-lg);
+    --lightbox-content-max-width: 95vw;
+    --lightbox-content-max-height: 95vh;
+    --lightbox-image-max-height: calc(95vh - 120px);
+    --lightbox-caption-max-width: min(600px, 90vw);
+    --lightbox-close-size: clamp(36px, 8vw, 48px);
+}
+
+/* =============================================================================
+   DARK MODE SHADOW ADJUSTMENTS
+   
+   In dark mode, shadows need to be lighter or use different colors
+   to maintain visibility against dark backgrounds
+   ============================================================================= */
+
+[data-theme="dark"] {
+    --shadow-sm: 0 4px 12px rgba(255, 255, 255, 0.1);
+    --shadow-md: 0 6px 16px rgba(255, 255, 255, 0.12);
+    --shadow-lg: 0 8px 25px rgba(255, 255, 255, 0.15);
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* =============================================================================
+   RESPONSIVE LIGHTBOX ADJUSTMENTS
+   
+   Lightbox dimensions change at different viewport sizes
+   ============================================================================= */
+
+@media (max-width: 60em) {
+    :root {
+        --lightbox-padding: var(--spacing-md);
+        --lightbox-content-max-width: 98vw;
+        --lightbox-image-max-height: calc(95vh - 140px);
+        --lightbox-caption-max-width: 100%;
+        --lightbox-close-size: clamp(32px, 7vw, 40px);
+    }
+}
+
+@media (max-width: 40em) {
+    :root {
+        --lightbox-padding: var(--spacing-sm);
+        --lightbox-content-max-width: 100vw;
+        --lightbox-content-max-height: 100vh;
+        --lightbox-image-max-height: calc(100vh - 160px);
+        --lightbox-close-size: clamp(28px, 6vw, 36px);
+    }
+}

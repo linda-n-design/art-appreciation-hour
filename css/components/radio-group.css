@@ -1,0 +1,102 @@
+/* =============================================================================
+   RADIO-GROUP.CSS - Radio Group Component
+   Styling for radio button groups using ARIA pattern
+   ============================================================================= */
+
+/* =============================================================================
+   COMPONENT DOCUMENTATION
+   
+   HTML Structure:
+   <div role="radiogroup" aria-label="Choose an option">
+     <button class="btn btn--filter" role="radio" aria-checked="true" data-filter="value1">
+       Option 1
+     </button>
+     <button class="btn btn--filter" role="radio" aria-checked="false" data-filter="value2">
+       Option 2
+     </button>
+   </div>
+   
+   JavaScript:
+   - RadioGroup component auto-initializes all [role="radiogroup"] elements
+   - Handles keyboard navigation, focus management, and ARIA states
+   - Dispatches 'radiogroup:change' events with detail: { value, button }
+   
+   ============================================================================= */
+
+/**
+ * Radio Group Container
+ * Base styling for radiogroup containers
+ */
+[role="radiogroup"] {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+/**
+ * Radio Button States
+ * Visual styling for checked/active state
+ * Note: Inherits base button styles from buttons.css
+ */
+[role="radio"][aria-checked="true"] {
+    background: var(--color-brand-primary);
+    color: white;
+    border-color: var(--color-brand-primary);
+}
+
+[role="radio"][aria-checked="true"]:hover {
+    background: var(--color-brand-secondary);
+    border-color: var(--color-brand-secondary);
+}
+
+/* Dark mode text color override for checked buttons */
+[data-theme="dark"] [role="radio"][aria-checked="true"] {
+    color: #022C4B;
+}
+
+[data-theme="dark"] [role="radio"][aria-checked="true"]:hover {
+    color: #022C4B;
+}
+
+/**
+ * Icon Color Adjustments for Checked State
+ * Ensures icons inside checked radio buttons have proper contrast
+ */
+[data-theme="light"] [role="radio"][aria-checked="true"] .btn__icon {
+    filter: brightness(0) saturate(100%) invert(100%);
+}
+
+[data-theme="dark"] [role="radio"][aria-checked="true"] .btn__icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+}
+
+@media (prefers-color-scheme: light) {
+    [role="radio"][aria-checked="true"] .btn__icon {
+        filter: brightness(0) saturate(100%) invert(100%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    [role="radio"][aria-checked="true"] .btn__icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+/**
+ * Focus Visible State
+ * Ensure focus indicator is visible for keyboard navigation
+ */
+[role="radio"]:focus-visible {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+}
+
+/* =============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================= */
+
+@media (max-width: 40em) {
+    [role="radiogroup"] {
+        gap: var(--spacing-xs);
+    }
+}

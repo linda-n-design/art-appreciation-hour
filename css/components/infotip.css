@@ -1,0 +1,223 @@
+/* =============================================================================
+   INFOTIP.CSS - Infotip Component
+   =============================================================================
+   A lightweight, modeless overlay for contextual information associated with
+   map locations or interactive elements.
+   
+   TABLE OF CONTENTS
+   
+   1. INFOTIP CONTAINER
+      - Base styles
+      - Positioning
+      - Z-index layering
+   
+   2. INFOTIP CONTENT
+      - Location name (heading)
+      - Artist list
+   
+   3. INFOTIP STATES
+      - Hidden (default)
+      - Visible
+      - Loading
+   
+   4. RESPONSIVE BEHAVIOR
+      - Desktop/Tablet: Floating popover
+      - Mobile (<40em): Bottom sheet
+   
+   5. ACCESSIBILITY
+      - Focus management
+      - Reduced motion
+   
+   =============================================================================
+   
+   Dependencies:
+   - colors.css (for --color-background-*, --color-text-*, --color-border-*)
+   - effects.css (for --shadow-md, --radius-lg, --transition-medium, --z-dropdown)
+   - spacing.css (for --spacing-*)
+   - typography.css (for .list-regular)
+   
+   ============================================================================= */
+
+/* =============================================================================
+   1. INFOTIP CONTAINER
+   ============================================================================= */
+
+.infotip {
+    position: fixed;
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    z-index: var(--z-dropdown);
+    max-width: 18.75em; /* 300px at 16px base */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-medium), 
+                visibility var(--transition-medium),
+                transform var(--transition-medium);
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+/* =============================================================================
+   2. INFOTIP CONTENT
+   ============================================================================= */
+
+.infotip__location-name {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-heading-secondary);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: var(--line-height-tight);
+}
+
+.infotip__artists {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.infotip__artists li {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-base);
+    margin-bottom: var(--spacing-xs);
+}
+
+.infotip__artists li:last-child {
+    margin-bottom: 0;
+}
+
+/* "More" indicator for truncated lists */
+.infotip__more {
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-top: var(--spacing-xs);
+}
+
+/* =============================================================================
+   2a. INFOTIP POINTER (TIP)
+   ============================================================================= */
+
+.infotip__pointer {
+    position: absolute;
+    width: 16px;
+    height: 12px;
+    pointer-events: none;
+}
+
+.infotip__pointer img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Pointer positions based on infotip placement */
+.infotip--pointer-top .infotip__pointer {
+    top: -12px; /* -11px + -1px for extra spacing from trigger */
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.infotip--pointer-bottom .infotip__pointer {
+    bottom: -12px; /* -11px + -1px for extra spacing from trigger */
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.infotip--pointer-left .infotip__pointer {
+    left: -12px; /* -11px + -1px for extra spacing from trigger */
+    right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 16px;
+}
+
+.infotip--pointer-right .infotip__pointer {
+    right: -12px; /* -11px + -1px for extra spacing from trigger */
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 16px;
+}
+
+/* =============================================================================
+   3. INFOTIP STATES
+   ============================================================================= */
+
+/* Visible state */
+.infotip--visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto; /* Allow interaction when visible */
+}
+
+/* Loading state */
+.infotip--loading {
+    opacity: 0.6;
+}
+
+.infotip__loading-text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* =============================================================================
+   4. RESPONSIVE BEHAVIOR
+   ============================================================================= */
+
+/* Desktop/Tablet: Floating popover (default styles above) */
+
+/* Mobile (<40em): Bottom sheet */
+@media (max-width: 40em) {
+    .infotip {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0; /* Hard edges on all sides */
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        padding: var(--spacing-lg);
+        transform: translateY(100%);
+        margin: 0; /* Remove any margins */
+    }
+    
+    .infotip--visible {
+        transform: translateY(0);
+    }
+}
+
+/* =============================================================================
+   5. ACCESSIBILITY
+   ============================================================================= */
+
+/* Focus styles for when infotip receives keyboard focus */
+.infotip:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+}
+
+/* Reduced motion - remove transitions */
+@media (prefers-reduced-motion: reduce) {
+    .infotip {
+        transition: none;
+    }
+}
+
+/* High contrast mode - enhance border */
+@media (prefers-contrast: high) {
+    .infotip {
+        border-width: 2px;
+    }
+}

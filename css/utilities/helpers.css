@@ -1,0 +1,304 @@
+/* =============================================================================
+   HELPERS.CSS - Utility Classes
+   =============================================================================
+   Reusable utility classes for common patterns:
+   - Icon theming (standalone and inline)
+   - Visual separators
+   - Layout helpers
+   - Text utilities
+   - Spacing utilities
+   ============================================================================= */
+
+/* =========================================================================
+   ICON COLOR THEMING
+   
+   Utilities for theme-aware icon coloring using CSS filters.
+   This allows single-color icons to automatically adapt to light/dark themes
+   without requiring multiple SVG files.
+   ========================================================================= */
+
+/* --- Standalone Icons --- */
+
+/* Theme-aware icon - changes color with theme (for UI icons like carets, spinners) */
+.theme-icon,
+[data-theme="light"] .theme-icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    transition: filter var(--transition-fast);
+}
+
+[data-theme="dark"] .theme-icon {
+    filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+}
+
+@media (prefers-color-scheme: light) {
+    .theme-icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .theme-icon {
+        filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+    }
+}
+
+/* =============================================================================
+   DEPRECATED: .category-icon
+   
+   This class is deprecated in favor of the new modular button system using .btn__icon
+   It remains here temporarily for backward compatibility but will be removed in a future version.
+   
+   Migration:
+   - Old: <img src="..." class="category-icon">
+   - New: <img src="..." class="btn__icon">
+   ============================================================================= */
+
+.category-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: filter var(--transition-fast);
+}
+
+/* Light theme */
+[data-theme="light"] .category-icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+}
+
+/* Dark theme */
+[data-theme="dark"] .category-icon {
+    filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+}
+
+@media (prefers-color-scheme: light) {
+    .category-icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .category-icon {
+        filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+    }
+}
+
+/* --- Text with Inline Icons --- */
+
+/* Text with theme-aware icon - icon scales with text size and changes color with theme */
+.text-with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+}
+
+.text-with-icon img,
+[data-theme="light"] .text-with-icon img {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    transition: filter var(--transition-fast);
+}
+
+
+[data-theme="dark"] .text-with-icon img {
+    filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+}
+
+@media (prefers-color-scheme: light) {
+    .text-with-icon img {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .text-with-icon img {
+        filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+    }
+}
+/* Text with leading icon - for paragraphs starting with an icon */
+.text-with-leading-icon {
+    margin: var(--spacing-2xl) 0;
+}
+
+.text-with-leading-icon img:first-child {
+    display: inline;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    margin-right: 0.35em;
+}
+/* Text with custom icon - icon scales with text size but keeps original colors */
+.text-with-custom-icon {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.35em;
+}
+
+.text-with-custom-icon img,
+.text-with-custom-icon span {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    filter: none;
+}
+
+/* =========================================================================
+   VISUAL SEPARATORS
+   ========================================================================= */
+
+/* Standard separator */
+.visual-separator {
+    height: 1px;
+    background: var(--color-border-primary);
+    margin: var(--spacing-lg) 0;
+    border: none;
+}
+
+/* Muted/subtle separator */
+.visual-separator-muted {
+    height: 1px;
+    background: var(--color-border-muted);
+    margin: var(--spacing-lg) 0;
+    border: none;
+}
+
+/* Decorative inline separator (bullet point) */
+.decorative-separator {
+    margin: 0 0.5em;
+    color: var(--color-text-muted);
+}
+
+.decorative-separator::before {
+    content: "•";
+}
+
+/* =========================================================================
+   TEXT UTILITIES
+   ========================================================================= */
+
+/* Text highlight */
+.highlight {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-heading-secondary);
+}
+
+/* Text alignment */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Mobile-specific left alignment override */
+@media (max-width: 40em) {
+    .mobile-left-align {
+        text-align: left !important;
+    }
+}
+
+/* =========================================================================
+   LAYOUT HELPERS
+   ========================================================================= */
+
+/* Flex center */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Flex between */
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Gap utilities */
+.gap-sm {
+    gap: var(--spacing-sm);
+}
+
+.gap-md {
+    gap: var(--spacing-md);
+}
+
+.gap-lg {
+    gap: var(--spacing-lg);
+}
+
+/* =========================================================================
+   VISIBILITY UTILITIES
+   ========================================================================= */
+
+/* Hide visually but keep accessible to screen readers */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Hide completely */
+.hidden {
+    display: none !important;
+}
+
+/* Show only on focus (for skip links etc) */
+.visually-hidden-focusable:focus,
+.visually-hidden-focusable:focus-within {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* =========================================================================
+   CONTENT SPACING UTILITIES
+   ========================================================================= */
+
+/* Centered content wrapper */
+.content-center {
+    text-align: center;
+}
+
+/* Standard vertical spacing */
+.content-spaced {
+    margin: var(--spacing-xl) 0;
+}
+
+/* =========================================================================
+   SPACING UTILITIES
+   ========================================================================= */
+
+/* Margin utilities */
+.margin-top-2xl { margin-top: var(--spacing-2xl); }
+.margin-bottom-2xl { margin-bottom: var(--spacing-2xl); }
+.margin-top-xl { margin-top: var(--spacing-xl); }
+.margin-bottom-xl { margin-bottom: var(--spacing-xl); }
+.margin-top-lg { margin-top: var(--spacing-lg); }
+.margin-bottom-lg { margin-bottom: var(--spacing-lg); }
+.margin-top-md { margin-top: var(--spacing-md); }
+.margin-bottom-md { margin-bottom: var(--spacing-md); }
+
+/* Padding utilities */
+.padding-top-xl { padding-top: var(--spacing-xl); }
+.padding-bottom-xl { padding-bottom: var(--spacing-xl); }
+.padding-top-lg { padding-top: var(--spacing-lg); }
+.padding-bottom-lg { padding-bottom: var(--spacing-lg); }

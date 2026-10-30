@@ -1,0 +1,244 @@
+/* =============================================================================
+   RANGE-SLIDER.CSS - Dual-Handle Year Range Slider Component
+   ============================================================================= */
+
+/* TABLE OF CONTENTS
+   =============================================================================
+   1. CONTAINER & LABEL
+      - Range slider container
+      - Label styling
+   2. SVG STRUCTURE
+      - SVG container
+      - Rail (track)
+      - Value labels (year markers)
+   3. SLIDER HANDLES
+      - Handle base styles
+      - Thumb (draggable element)
+      - Focus ring
+      - Current value display
+   4. FOCUS & HOVER STATES
+      - Focus states
+      - Hover interactions
+   5. ACCESSIBILITY
+      - Keyboard navigation support
+      - Screen reader support
+   ============================================================================= */
+
+
+/* =============================================================================
+   1. CONTAINER & LABEL
+   ============================================================================= */
+
+/**
+ * Range Slider Container
+ * Main wrapper for the dual-handle range slider component
+ */
+.range-slider {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-sm);
+    color: var(--color-text-primary);
+}
+
+/**
+ * Label
+ * Label text for the range slider
+ */
+.range-slider .label {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-heading-secondary);
+    margin-bottom: var(--spacing-md);
+    display: block;
+}
+
+
+/* =============================================================================
+   2. SVG STRUCTURE
+   ============================================================================= */
+
+/**
+ * SVG Container
+ * Container for all SVG elements
+ */
+.range-slider svg {
+    forced-color-adjust: auto;
+    display: block;
+}
+
+/**
+ * Text Elements
+ * All text elements in the SVG (labels, values)
+ */
+.range-slider text {
+    font-weight: var(--font-weight-bold);
+    fill: currentcolor;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+}
+
+/**
+ * Rail (Track)
+ * The horizontal track that the handles slide along
+ */
+.range-slider .rail {
+    stroke: var(--color-border-primary);
+    stroke-width: 2px;
+    fill: var(--color-border-primary);
+    fill-opacity: 0.25;
+}
+
+/**
+ * Range Fill
+ * The active range between the two handles (brand color)
+ */
+.range-slider .range-fill {
+    fill: var(--color-brand-primary);
+    stroke: none;
+}
+
+/**
+ * Value Labels (Year Markers)
+ * Labels showing years along the rail
+ */
+.range-slider .value-label text {
+    fill: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+}
+
+/**
+ * Responsive: Hide some labels at mobile to prevent truncation
+ * Shows: 1888, 1970, 1990, 2010, 2025 (roughly every 20 years)
+ * Hides: 1950, 1960, 1980, 2000, 2020
+ */
+@media (max-width: 768px) {
+    .range-slider .value-label--hide-mobile {
+        display: none;
+    }
+}
+
+
+/* =============================================================================
+   3. SLIDER HANDLES
+   ============================================================================= */
+
+/**
+ * Slider Group
+ * Container for each handle (start and end)
+ * Prevents scrolling interference on touch devices
+ */
+.range-slider .slider-group {
+    touch-action: pan-y;
+}
+
+/**
+ * Thumb (Draggable Element)
+ * The visible handle that users drag
+ */
+.range-slider .thumb {
+    stroke-width: 0;
+    fill: var(--color-interactive-primary);
+    cursor: grab;
+    transition: fill var(--transition-fast);
+}
+
+.range-slider .thumb:active {
+    cursor: grabbing;
+}
+
+/**
+ * Focus Ring
+ * Visible focus indicator for keyboard navigation
+ * Hidden by default, shown on focus
+ */
+.range-slider .focus-ring {
+    stroke: var(--color-interactive-focus);
+    stroke-opacity: 0;
+    fill-opacity: 0;
+    stroke-width: 3px;
+    display: none;
+}
+
+/**
+ * Current Value Display
+ * Shows the current year value above the handle
+ * Hidden by default, shown on focus
+ */
+.range-slider .slider-group .value {
+    display: none;
+    fill: var(--color-text-primary);
+    font-size: var(--font-size-base);
+}
+
+
+/* =============================================================================
+   4. FOCUS & HOVER STATES
+   ============================================================================= */
+
+/**
+ * Focus State - Container
+ * When any handle is focused
+ */
+.range-slider.focus [role="slider"] {
+    color: var(--color-interactive-focus);
+}
+
+/**
+ * Focus State - Handle
+ * Individual handle focus styling
+ */
+.range-slider [role="slider"]:focus {
+    outline: none;
+}
+
+.range-slider [role="slider"]:focus .focus-ring {
+    display: block;
+    stroke-opacity: 1;
+}
+
+.range-slider [role="slider"]:focus .value {
+    display: block;
+}
+
+.range-slider [role="slider"]:focus .thumb {
+    fill: var(--color-interactive-focus);
+}
+
+/**
+ * Hover State
+ * Handle hover styling
+ */
+.range-slider .thumb:hover {
+    fill: var(--color-interactive-hover);
+}
+
+
+/* =============================================================================
+   5. ACCESSIBILITY
+   ============================================================================= */
+
+/**
+ * Keyboard Navigation Support
+ * Ensures proper cursor behavior for keyboard users
+ */
+.range-slider [role="slider"] {
+    cursor: pointer;
+}
+
+/**
+ * High Contrast Mode Support
+ * Ensures visibility in Windows High Contrast mode
+ */
+@media (forced-colors: active) {
+    .range-slider .rail {
+        stroke: CanvasText;
+        fill: Canvas;
+    }
+    
+    .range-slider .thumb {
+        fill: ButtonText;
+    }
+    
+    .range-slider .focus-ring {
+        stroke: Highlight;
+    }
+}

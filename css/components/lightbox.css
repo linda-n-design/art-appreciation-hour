@@ -1,0 +1,298 @@
+/*
+lightbox.css - Standalone Lightbox Component Styles
+
+Table of Contents:
+1. General Styles
+   1.1 Lightbox Overlay
+   1.2 Lightbox Content
+   1.3 Image Container
+   1.4 Lightbox Image
+   1.5 Lightbox Caption
+2. Interactive Elements
+   2.1 Close Button
+   2.2 Navigation Buttons
+   2.3 Lightbox Button
+3. Content-Specific Styles
+   3.1 Content with Image
+   3.2 Content Image
+4. Responsive Adjustments
+   4.1 Tablet Adjustments
+   4.2 Mobile Adjustments
+*/
+
+/* ==================== */
+/* 1. General Styles    */
+/* ==================== */
+
+/* 1.1 Lightbox Overlay */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--lightbox-backdrop);
+    z-index: var(--lightbox-z-index);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--lightbox-padding);
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.lightbox-overlay.active {
+    display: flex !important;
+    opacity: 1;
+}
+
+/* 1.2 Lightbox Content */
+.lightbox-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: var(--lightbox-content-max-width);
+    max-height: var(--lightbox-content-max-height);
+    box-sizing: border-box;
+}
+
+/* 1.3 Image Container */
+.lightbox-image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    flex: 1;
+}
+
+/* 1.4 Lightbox Image */
+.lightbox-image {
+    display: block;
+    max-width: 100%;
+    max-height: var(--lightbox-image-max-height);
+    width: auto;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--lightbox-shadow);
+    object-fit: contain;
+    background: #fff;
+    border: 2px solid #0070C0;
+}
+
+/* 1.5 Lightbox Caption */
+.lightbox-caption {
+    background: #002038;
+    color: #ffffff;
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    max-width: 900px;
+    word-wrap: break-word;
+    backdrop-filter: blur(8px);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    border: 2px solid #0070C0;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-base);
+}
+
+/* ========================= */
+/* 2. Interactive Elements  */
+/* ========================= */
+
+/* 2.1 Close Button */
+.lightbox-close {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    width: var(--lightbox-close-size);
+    height: var(--lightbox-close-size);
+    background: #022C4B;
+    border: 2px solid #0070C0;
+    border-radius: var(--radius-full);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    z-index: 100001;
+    box-shadow: var(--lightbox-shadow);
+    padding: calc(var(--lightbox-close-size) * 0.2);
+}
+
+.lightbox-close:hover {
+    background: #1A2332;
+    border-color: #0070C0;
+    transform: translateY(-2px);
+}
+
+.lightbox-close:focus {
+    background: #1A2332;
+    outline: 3px solid #0070C0;
+    outline-offset: 2px;
+    border-color: #0070C0;
+}
+
+.lightbox-close svg,
+.lightbox-close img {
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+}
+
+/* 2.2 Navigation Buttons */
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: #022C4B;
+    border: 2px solid #0070C0;
+    border-radius: var(--radius-md);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    z-index: 100001;
+    box-shadow: var(--lightbox-shadow);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.lightbox-nav:hover {
+    background: #1A2332;
+    border-color: #0070C0;
+    transform: translateY(-50%) translateY(-2px);
+}
+
+.lightbox-nav:focus {
+    background: #1A2332;
+    outline: 3px solid #0070C0;
+    outline-offset: 2px;
+    border-color: #0070C0;
+}
+
+.lightbox-nav-prev {
+    left: var(--spacing-sm);
+}
+
+.lightbox-nav-next {
+    right: var(--spacing-sm);
+}
+
+.lightbox-nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #ffffff;
+    border-color: #0070C0;
+    transform: translateY(-50%);
+    box-shadow: none;
+}
+
+.lightbox-nav:disabled:hover {
+    background: #ffffff;
+    border-color: #0070C0;
+    transform: translateY(-50%);
+    box-shadow: none;
+}
+
+/* 2.3 Lightbox Button */
+.lightbox-button {
+    display: inline-flex;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
+    padding: var(--spacing-md);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.lightbox-button:hover {
+    background: var(--color-link-hover-background);
+    transform: translateY(-2px);
+    border-radius: var(--radius-lg); /* Ensure consistent shape */
+}
+
+.lightbox-button:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-color: var(--color-interactive-focus);
+    border-radius: var(--radius-lg); /* Ensure consistent shape */
+}
+
+/* ============================ */
+/* 3. Content-Specific Styles  */
+/* ============================ */
+
+/* 3.1 Content with Image */
+.content-with-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ensure hover background spans 100% width */
+.content-with-image:hover {
+    background-color: var(--color-hover-background);
+    width: 100%;
+}
+
+/* 3.2 Content Image */
+.content-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+    min-width: min(250px, 100%);
+}
+
+.content-image img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+/* Additional responsive styles */
+.content-image {
+    order: 2; /* Always put image after text on tablet/zoom */
+    justify-content: center; /* Center images */
+}
+
+/* ============================ */
+/* 4. Responsive Adjustments   */
+/* ============================ */
+
+/* 4.1 Tablet Adjustments */
+@media (max-width: 48em) {
+    .lightbox-image {
+        border-radius: var(--radius-md);
+    }
+    
+    .lightbox-caption {
+        border-radius: var(--radius-md);
+    }
+}
+
+/* 4.2 Mobile Adjustments */
+@media (max-width: 30em) {
+    .lightbox-image {
+        border-radius: var(--radius-sm);
+    }
+    
+    .lightbox-caption {
+        border-radius: var(--radius-sm);
+    }
+}

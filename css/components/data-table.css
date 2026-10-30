@@ -1,0 +1,289 @@
+/* component-data-table.css - Data Table Component */
+
+/*
+ * TABLE OF CONTENTS
+ * 
+ * 1. Data Table Container
+ * 2. Table Cells - Base Styles
+ * 3. Column Headers
+ * 4. Sticky Column Headers
+ * 5. Row Headers
+ * 6. Alignment Utilities
+ * 7. List Styles within Table Cells
+ * 8. Stacked Values within Cell
+ * 9. Sticky Shadow Modifier
+ * 10. Sortable Table Headers
+ * 11. Sort Indicators
+ */
+
+/* ========================================
+   1. Data Table Container
+   ======================================== */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0; /* No gap - flush with app-header */
+}
+
+/* ========================================
+   2. Table Cells - Base Styles
+   ======================================== */
+.data-table th,
+.data-table td {
+    padding: var(--spacing-sm);
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Body cell borders only */
+.data-table tbody th,
+.data-table tbody td {
+    border-bottom: 1px solid var(--color-border-primary);
+}
+
+/* Row hover state - highlight background on hover */
+.data-table tbody tr:hover {
+    background-color: var(--color-table-row-hover);
+    transition: background-color 0.2s ease;
+}
+
+/* ========================================
+   3. Column Headers
+   ======================================== */
+.data-table thead th {
+    font-weight: var(--font-weight-bold);
+    background-color: var(--color-background-secondary);
+    /* Use box-shadow instead of border so it stays with sticky element */
+    box-shadow: inset 0 -2px 0 0 var(--color-border-primary);
+}
+
+/* ========================================
+   4. Sticky Column Headers - JavaScript-based
+   ======================================== */
+/* CSS sticky positioning removed - now handled by JavaScript */
+/* This allows sticky headers to work with horizontal scroll */
+
+.data-table__sticky-clone {
+    display: table;
+    width: 100%;
+    background-color: var(--color-background-secondary);
+    box-shadow: var(--shadow-md);
+    pointer-events: auto;
+    border-collapse: collapse;
+    table-layout: fixed; /* Prevent cells from resizing */
+    margin: 0; /* Remove any table margin that might add height */
+}
+
+.data-table__sticky-clone th {
+    font-weight: var(--font-weight-bold);
+    background-color: var(--color-background-secondary);
+    box-shadow: inset 0 -2px 0 0 var(--color-border-primary);
+    padding: var(--spacing-sm);
+    text-align: left;
+    vertical-align: top;
+    /* Allow text wrapping like default state */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Hover state on sticky clone th */
+.data-table__sticky-clone th:hover {
+    background-color: var(--color-background-tertiary, rgba(0, 0, 0, 0.05));
+}
+
+/* Focus state on sticky clone th */
+.data-table__sticky-clone th:focus-within {
+    outline: 2px solid var(--color-focus, #0066cc);
+    outline-offset: -2px;
+}
+
+/* Sortable button styles for sticky clone - transparent wrapper */
+.data-table__sticky-clone th button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-weight: var(--font-weight-bold);
+    text-align: inherit;
+    color: inherit;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 1.5em;
+    /* Allow text wrapping like default state */
+}
+
+/* Remove button-level hover/focus - handled by th */
+.data-table__sticky-clone th button:hover {
+    background: none;
+}
+
+.data-table__sticky-clone th button:focus {
+    outline: none;
+}
+
+/* Sort indicators for sticky clone */
+.data-table__sticky-clone th button::after {
+    content: '';
+    position: absolute;
+    right: 0.5em;
+    top: 0.2em; /* Top-aligned instead of centered */
+    width: 0.875em;
+    height: 0.875em;
+    opacity: 0.3;
+    background-color: currentColor;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-image: url('../../images/icon-arrows-up-down-solid-full.svg');
+}
+
+.data-table__sticky-clone th[aria-sort="ascending"] button::after {
+    mask-image: url('../../images/icon-up.svg');
+    opacity: 1;
+}
+
+.data-table__sticky-clone th[aria-sort="descending"] button::after {
+    mask-image: url('../../images/icon-down.svg');
+    opacity: 1;
+}
+
+/* ========================================
+   5. Row Headers
+   ======================================== */
+.data-table th {
+    font-weight: var(--font-weight-bold);
+}
+
+/* ========================================
+   6. Alignment Utilities
+   ======================================== */
+.data-table .align-right {
+    text-align: right;
+}
+
+/* ========================================
+   7. List Styles within Table Cells
+   ======================================== */
+.data-table .list-unstyled {
+    margin-bottom: 0;
+}
+
+.data-table .list-unstyled li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.data-table .list-unstyled li:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   8. Stacked Values within Cell
+   ======================================== */
+.data-table .cell-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+}
+
+/* ========================================
+   9. Sticky Shadow Modifier - shadow appears when scrolled
+   ======================================== */
+.data-table--sticky-shadow.data-table--scrolled thead {
+    box-shadow: var(--shadow-sm);
+}
+
+/* ========================================
+   10. Sortable Table Headers
+   ======================================== */
+
+/* Sortable th cells - hover state on the cell itself */
+.data-table--sortable thead th {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.data-table--sortable thead th:hover {
+    background-color: var(--color-background-tertiary, rgba(0, 0, 0, 0.05));
+}
+
+.data-table--sortable thead th:focus-within {
+    outline: 2px solid var(--color-focus, #0066cc);
+    outline-offset: -2px;
+}
+
+/* Sortable buttons - transparent, just for accessibility */
+.data-table--sortable thead th button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-weight: var(--font-weight-bold);
+    text-align: inherit;
+    color: inherit;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 1.5em; /* Space for sort arrow */
+}
+
+/* Remove button-level hover - handled by th */
+.data-table--sortable thead th button:hover {
+    background: none;
+}
+
+/* Remove button-level focus - handled by th:focus-within */
+.data-table--sortable thead th button:focus {
+    outline: none;
+}
+
+/* ========================================
+   11. Sort Indicators using aria-sort attribute
+   ======================================== */
+.data-table--sortable thead th button::after {
+    content: '';
+    position: absolute;
+    right: 0.5em;
+    top: 0.2em; /* Top-aligned instead of centered */
+    width: 0.875em;
+    height: 0.875em;
+    opacity: 0.3;
+    background-color: currentColor;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+/* Default unsorted indicator */
+.data-table--sortable thead th button::after {
+    mask-image: url('../../images/icon-arrows-up-down-solid-full.svg');
+}
+
+/* Ascending sort indicator */
+.data-table--sortable thead th[aria-sort="ascending"] button::after {
+    mask-image: url('../../images/icon-up.svg');
+    opacity: 1;
+}
+
+/* Descending sort indicator */
+.data-table--sortable thead th[aria-sort="descending"] button::after {
+    mask-image: url('../../images/icon-down.svg');
+    opacity: 1;
+}
+
+/* ========================================
+   12. Responsive Horizontal Scroll (Mobile)
+   ======================================== */
+
+/* Container enables horizontal scroll */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* JavaScript handles sticky header positioning to work with horizontal scroll */

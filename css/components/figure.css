@@ -1,0 +1,37 @@
+/* css/components/figure.css */
+
+figure {
+    margin: var(--spacing-lg) 0;
+}
+
+figure img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+figcaption {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-base);
+    color: var(--color-text-muted);
+    text-align: left;
+    margin-top: var(--spacing-md);
+}
+
+/* Figcaption Alignment Modifiers */
+.figcaption-center {
+    text-align: center;
+}
+
+.figcaption-right {
+    text-align: right;
+}
+
+/* Links in figcaption - override defaults for better spacing */
+figcaption a.trailing-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2xs);
+    white-space: nowrap;
+}

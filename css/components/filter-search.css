@@ -1,0 +1,98 @@
+/* =============================================================================
+   FILTER-SEARCH.CSS - Filter Search Component
+   =============================================================================
+   Reusable search container with sticky positioning and focus outline handling.
+   
+   Used by:
+   - playlist-visualized data table filter dialog
+   - a11y index page filtering
+   
+   TABLE OF CONTENTS
+   
+   1. Filter Search Container
+      - Sticky positioning with focus outline space
+      - Search input wrapper and styling
+      - Clear button
+   
+   ============================================================================= */
+
+/* =============================================================================
+   1. FILTER SEARCH CONTAINER
+   ============================================================================= */
+
+/* Search container - sticky at top of filterable content */
+.filter-search-container {
+    position: sticky;
+    top: 0;
+    background: var(--color-background-primary);
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border-primary);
+    margin-bottom: var(--spacing-md);
+    z-index: 1;
+}
+
+/* Search input wrapper - contains input and optional clear button */
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Search input field */
+.filter-input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    padding-right: var(--spacing-3xl);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-primary);
+    border: 2px solid var(--color-border-primary);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+.filter-input:hover {
+    border-color: var(--color-interactive-primary);
+}
+
+.filter-input:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-color: var(--color-interactive-primary);
+}
+
+.filter-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+/* Clear button - positioned inside input field */
+.clear-button {
+    position: absolute;
+    right: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-full);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    line-height: 1;
+    transition: all var(--transition-fast);
+}
+
+.clear-button:hover {
+    background-color: var(--color-link-hover-background);
+    color: var(--color-text-primary);
+}
+
+.clear-button:focus-visible {
+    outline: 2px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+}

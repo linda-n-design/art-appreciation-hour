@@ -1,0 +1,514 @@
+/* buttons.css - Button Component System */
+
+/* ============================================================
+   TABLE OF CONTENTS
+   ============================================================
+   
+   MODULAR BUTTON SYSTEM (BEM):
+   1. BASE BUTTON (.btn)
+   2. BUTTON ICON (.btn__icon)
+   3. BUTTON VARIANTS
+       - Theme Toggle (.btn--theme-toggle)
+       - Filter (.btn--filter)
+       - Floating (.btn--floating, .btn--floating-demo)
+       - Jumbo CTA (.btn--jumbo)
+       - CTA (.btn--cta)
+       - Text Link (.btn--text-link)
+   
+   STANDALONE COMPONENTS (defined elsewhere):
+   4. LIGHTBOX COMPONENTS (lightbox.css)
+      - .lightbox-button
+      - .lightbox-close
+   ============================================================ */
+
+
+/* ============================================================
+   MODULAR BUTTON SYSTEM (BEM)
+   
+   Usage:
+   - .btn = base class (required on all buttons)
+   - .btn__icon = icon element inside buttons
+   - .btn__text = text element inside buttons (optional)
+   - .btn--variant = modifier for different button types
+   ============================================================ */
+
+/* --- Base Button Class --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: 44px;
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn:hover {
+    background: var(--color-link-hover-background);
+    border-color: var(--color-interactive-primary);
+    color: var(--color-link-hover-text);
+}
+
+.btn:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    background: var(--color-link-hover-background);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Disabled state */
+.btn:disabled,
+.btn[disabled] {
+    color: var(--color-text-muted);
+    border-color: var(--color-border-muted);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* --- Button Icon Element --- */
+.btn__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: filter var(--transition-fast);
+}
+
+[data-theme="light"] .btn__icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+}
+
+[data-theme="dark"] .btn__icon {
+    filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+}
+
+@media (prefers-color-scheme: light) {
+    .btn__icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .btn__icon {
+        filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+    }
+}
+
+/* --- Theme Toggle Variant --- */
+.btn--theme-toggle {
+    background: none;
+    padding: 0 var(--spacing-md);
+    height: 44px;
+    min-width: 44px;
+    font-size: var(--font-size-sm);
+    line-height: 1;
+}
+
+/* Light mode: Use brand-secondary color for text */
+[data-theme="light"] .btn--theme-toggle {
+    color: var(--color-brand-secondary);
+}
+
+/* Theme toggle icons use their own gradients - disable filters */
+.btn--theme-toggle .btn__icon {
+    filter: none !important;
+}
+
+/* --- Filter Button Variant --- */
+/* Note: Radio button styles ([role="radio"][aria-checked]) are in radio-group.css */
+/* This only handles aria-pressed for legacy button groups */
+.btn--filter[aria-pressed="true"] {
+    background: var(--color-brand-primary);
+    color: white;
+    border-color: var(--color-brand-primary);
+}
+
+.btn--filter[aria-pressed="true"]:hover {
+    background: var(--color-brand-secondary);
+    border-color: var(--color-brand-secondary);
+}
+
+[data-theme="dark"] .btn--filter[aria-pressed="true"] {
+    color: #022C4B;
+}
+
+[data-theme="dark"] .btn--filter[aria-pressed="true"]:hover {
+    color: #022C4B;
+}
+
+[data-theme="light"] .btn--filter[aria-pressed="true"] .btn__icon {
+    filter: brightness(0) saturate(100%) invert(100%);
+}
+
+[data-theme="dark"] .btn--filter[aria-pressed="true"] .btn__icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+}
+
+@media (prefers-color-scheme: light) {
+    .btn--filter[aria-pressed="true"] .btn__icon {
+        filter: brightness(0) saturate(100%) invert(100%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .btn--filter[aria-pressed="true"] .btn__icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+/* --- Floating Action Button Variant --- */
+.btn--floating {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: var(--z-fixed);
+    box-shadow: var(--shadow-sm);
+    font-size: var(--font-size-sm);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+}
+
+.btn--floating.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.btn--floating:hover {
+    background-color: var(--color-link-hover-background);
+    border-color: var(--color-interactive-primary);
+    color: var(--color-link-hover-text);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn--floating:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    background-color: var(--color-link-hover-background);
+    border-color: var(--color-interactive-primary);
+    color: var(--color-link-hover-text);
+}
+
+.btn--floating-demo {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: var(--shadow-sm);
+    font-size: var(--font-size-sm);
+}
+
+.btn--floating-demo:hover {
+    background-color: var(--color-link-hover-background);
+    border-color: var(--color-interactive-primary);
+    color: var(--color-link-hover-text);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* --- Jumbo CTA Variant (Draggable Bookmarklet) --- */
+.btn--jumbo {
+    border: 1px solid var(--color-cta-background);
+    background-color: var(--color-cta-background);
+    color: var(--color-cta-text);
+    font-weight: var(--font-weight-bold);
+    min-height: 56px;
+    min-width: 200px;
+    padding: var(--spacing-md) var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    cursor: grab;
+}
+
+.btn--jumbo:hover {
+    background-color: var(--color-cta-hover-background);
+    border-color: var(--color-cta-hover-background);
+    color: var(--color-cta-hover-text);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn--jumbo:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    background-color: var(--color-cta-background);
+    color: var(--color-cta-text);
+}
+
+.btn--jumbo:active {
+    cursor: grabbing;
+    transform: translateY(0);
+}
+
+/* Disabled state */
+.btn--jumbo:disabled,
+.btn--jumbo[disabled] {
+    background-color: var(--color-background-primary);
+    color: var(--color-text-muted);
+    border-color: var(--color-border-muted);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .btn--jumbo {
+    background-color: var(--color-cta-background);
+    border: 1px solid var(--color-border-primary);
+    color: var(--color-cta-text);
+}
+
+[data-theme="dark"] .btn--jumbo:hover {
+    background-color: var(--color-cta-hover-background);
+    border-color: var(--color-border-primary);
+    color: var(--color-cta-hover-text);
+}
+
+[data-theme="dark"] .btn--jumbo:focus {
+    background-color: var(--color-cta-hover-background);
+    border: 3px solid var(--color-interactive-focus);
+    color: var(--color-cta-hover-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    .btn--jumbo {
+        background-color: var(--color-cta-background);
+        border: 1px solid var(--color-border-primary);
+        color: var(--color-cta-text);
+    }
+    
+    .btn--jumbo:hover {
+        background-color: var(--color-cta-hover-background);
+        border-color: var(--color-border-primary);
+        color: var(--color-cta-hover-text);
+    }
+    
+    .btn--jumbo:focus {
+        background-color: var(--color-cta-hover-background);
+        border: 3px solid var(--color-interactive-focus);
+        color: var(--color-cta-hover-text);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn--jumbo:hover {
+        transform: none;
+    }
+}
+
+/* --- CTA (Call to Action) Variant --- */
+.btn--cta {
+    border: 1px solid var(--color-cta-background);
+    background-color: var(--color-cta-background);
+    color: var(--color-cta-text);
+    min-height: 56px;
+    min-width: 200px;
+}
+
+.btn--cta:hover {
+    background-color: var(--color-cta-hover-background);
+    border-color: var(--color-cta-hover-background);
+    color: var(--color-cta-hover-text);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn--cta:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    background-color: var(--color-cta-background);
+    color: var(--color-cta-text);
+}
+
+.btn--cta:active {
+    transform: translateY(0);
+}
+
+/* Disabled state */
+.btn--cta:disabled,
+.btn--cta[disabled] {
+    background-color: var(--color-background-primary);
+    color: var(--color-text-muted);
+    border-color: var(--color-border-muted);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .btn--cta {
+    background-color: var(--color-cta-background);
+    border: 1px solid var(--color-border-primary);
+    color: var(--color-cta-text);
+}
+
+[data-theme="dark"] .btn--cta:hover {
+    background-color: var(--color-cta-hover-background);
+    border-color: var(--color-border-primary);
+    color: var(--color-cta-hover-text);
+}
+
+[data-theme="dark"] .btn--cta:focus {
+    background-color: var(--color-cta-hover-background);
+    border: 3px solid var(--color-interactive-focus);
+    color: var(--color-cta-hover-text);
+}
+
+@media (prefers-color-scheme: dark) {
+    .btn--cta {
+        background-color: var(--color-cta-background);
+        border: 1px solid var(--color-border-primary);
+        color: var(--color-cta-text);
+    }
+    
+    .btn--cta:hover {
+        background-color: var(--color-cta-hover-background);
+        border-color: var(--color-border-primary);
+        color: var(--color-cta-hover-text);
+    }
+    
+    .btn--cta:focus {
+        background-color: var(--color-cta-hover-background);
+        border: 3px solid var(--color-interactive-focus);
+        color: var(--color-cta-hover-text);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn--cta:hover {
+        transform: none;
+    }
+}
+
+/* --- Text Link Button Variant --- */
+/* Looks like an underlined link. Use for inline actions like "Reset filters"
+   or "Organize by album release date" that sit within or near body text. */
+.btn--text-link {
+    background: none;
+    border: none;
+    color: var(--color-link-primary);
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    display: inline;
+    transition: all var(--transition-fast);
+}
+
+.btn--text-link:hover {
+    color: var(--color-link-hover-text);
+    text-decoration: underline;
+}
+
+.btn--text-link:focus {
+    outline: 2px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+    text-decoration: underline;
+    color: var(--color-link-hover-text);
+}
+
+.btn--text-link:disabled {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ============================================================
+   ACCESSIBILITY & REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+    
+    .btn:hover,
+    .btn--floating:hover {
+        transform: none;
+    }
+}
+
+
+/* ============================================================
+   STANDALONE LIGHTBOX BUTTON COMPONENT
+   
+   Note: .lightbox-close is defined in lightbox.css
+   This component is specific to lightbox triggers and not
+   part of the BEM button system
+   ============================================================ */
+
+.lightbox-button {
+    background: transparent;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: none;
+    border-radius: var(--radius-lg);
+    outline-offset: var(--outline-offset);
+    text-decoration: none;
+    width: auto;
+    height: auto;
+}
+
+.lightbox-button:hover {
+    background: var(--color-link-hover-background);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-lg);
+}
+
+.lightbox-button:focus,
+.lightbox-button:focus-visible {
+    background: var(--color-link-hover-background);
+    outline: 3px solid var(--color-interactive-focus);
+    border-radius: var(--radius-lg);
+}
+
+.lightbox-button:active {
+    transform: translateY(0);
+    background: var(--color-link-hover-background);
+}
+
+.lightbox-button img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-sm);
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.lightbox-button-label {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+    color: var(--color-link-primary);
+    text-align: center;
+    pointer-events: none;
+    line-height: var(--line-height-base);
+    margin-top: var(--spacing-xs);
+    word-wrap: break-word;
+}
+
+.lightbox-button:hover .lightbox-button-label,
+.lightbox-button:focus .lightbox-button-label {
+    color: var(--color-link-hover-text);
+}s

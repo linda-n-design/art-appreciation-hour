@@ -1,0 +1,33 @@
+/* styles.css - Main CSS file that imports all other stylesheets */
+
+/* 1. Reset & Base - Must come first */
+@import url("./base/reset.css");
+@import url("./base/layout.css");
+@import url("./base/global.css");
+
+/* 2. Tokens - Define variables before they're used */
+@import url("./tokens/colors.css");
+@import url("./tokens/spacing.css");
+@import url("./tokens/typography.css");
+@import url("./tokens/effects.css");
+
+
+/* 3. Components - Use the tokens defined above */
+@import url("./components/breadcrumb.css");
+@import url("./components/buttons.css");
+@import url("./components/disclosure-widgets.css");
+@import url("./components/links.css");
+@import url("./components/lists.css");
+@import url("./components/navigation.css");
+@import url("./components/separators.css");
+@import url("./components/skip-link.css");
+@import url("./components/tile.css");
+@import url("./components/toc.css");
+
+/* 4. Utilities & Helpers */
+@import url("./utilities/accessibility.css");
+@import url("./utilities/helpers.css");
+@import url("./utilities/responsive.css");
+
+/* 5. Theme-specific styles */
+@import url("./pages/hero-gradients.css");

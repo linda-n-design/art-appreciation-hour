@@ -1,0 +1,107 @@
+/* component-breadcrumb.css - Accessible Breadcrumb Navigation */
+
+.breadcrumb-nav {
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+}
+
+.breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: var(--spacing-xs);
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+
+/* Current page styling */
+.breadcrumb-current {
+    color: var(--color-text-muted);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+}
+
+/* Breadcrumb separator */
+.breadcrumb-separator {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.breadcrumb-separator-icon {
+    width: 1.5em;
+    height: 1.5em;
+    transition: filter var(--transition-fast);
+}
+
+/* Icon Color Theming - Light Mode */
+[data-theme="light"] .breadcrumb-separator-icon {
+    filter: brightness(0) saturate(100%) invert(45%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(90%);
+}
+
+/* Icon Color Theming - Dark Mode */
+[data-theme="dark"] .breadcrumb-separator-icon {
+    filter: brightness(0) saturate(100%) invert(65%) sepia(10%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* System Preference Fallbacks */
+@media (prefers-color-scheme: light) {
+    .breadcrumb-separator-icon {
+        filter: brightness(0) saturate(100%) invert(45%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(90%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .breadcrumb-separator-icon {
+        filter: brightness(0) saturate(100%) invert(65%) sepia(10%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(90%);
+    }
+}
+
+/* Accessibility enhancements */
+@media (prefers-reduced-motion: reduce) {
+    .breadcrumb-link {
+        transition: none;
+    }
+}
+
+@media (prefers-contrast: high) {
+    .breadcrumb-link:focus {
+        outline-width: 4px;
+    }
+}
+
+/* Remove underline from breadcrumb links */
+.breadcrumb-link {
+    text-decoration: none;
+}
+
+/* Remove underline from links within breadcrumb items */
+.breadcrumb-item a {
+    text-decoration: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 40em) {
+    .breadcrumb-nav {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .breadcrumb-list {
+        gap: var(--spacing-xs);
+    }
+    
+    .breadcrumb-item {
+        gap: var(--spacing-xs);
+    }
+}

@@ -1,0 +1,182 @@
+/* disclosure-widgets.css - Accessible Disclosure Widget Components */
+
+/* Highlights Section Container */
+.highlights-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.highlights-section h3 {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-heading-secondary);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+
+
+/* Disclosure Item Container */
+.disclosure-item {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Disclosure Toggle Button */
+.disclosure-toggle {
+    background: none;
+    border: none;
+    padding: var(--spacing-md);
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-base);
+    color: var(--color-link-primary);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    outline-offset: var(--outline-offset, 2px);
+}
+
+.disclosure-toggle:hover {
+    background-color: var(--color-link-hover-background);
+    color: var(--color-link-hover-text);
+}
+
+.disclosure-toggle:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--outline-offset, 2px);
+    background-color: var(--color-link-hover-background);
+    color: var(--color-link-hover-text);
+}
+
+.disclosure-toggle:focus-visible {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--outline-offset, 2px);
+    background-color: var(--color-link-hover-background);
+    color: var(--color-link-hover-text);
+}
+
+.disclosure-toggle:active {
+    background-color: var(--color-link-hover-background);
+}
+
+/* Disclosure Arrow */
+.disclosure-arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 6px solid var(--color-link-primary);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform var(--transition-fast);
+    flex-shrink: 0;
+    margin-right: var(--spacing-xs);
+    /* Calculate precise alignment with first line of text */
+    margin-top: calc(1em * var(--line-height-base, 1.5) * 0.5 - 4px);
+}
+
+.disclosure-toggle:hover .disclosure-arrow {
+    border-left-color: var(--color-link-hover-text);
+}
+
+.disclosure-toggle:focus .disclosure-arrow {
+    border-left-color: var(--color-link-hover-text);
+}
+
+.disclosure-toggle[aria-expanded="true"] .disclosure-arrow {
+    transform: rotate(90deg);
+}
+
+/* Disclosure Title */
+.disclosure-title {
+    font-weight: var(--font-weight-bold);
+    color: inherit; /* Inherits from parent .disclosure-toggle */
+}
+
+/* Disclosure Content */
+.disclosure-content {
+    padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-xl);
+    overflow: hidden;
+    transition: all var(--transition-fast);
+}
+
+.disclosure-content[aria-hidden="true"] {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+}
+
+.disclosure-content[aria-hidden="false"] {
+    max-height: none;
+    opacity: 1;
+    animation: fadeIn var(--transition-fast) ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Content within disclosure */
+.disclosure-content .initiatives-list {
+    margin-top: var(--spacing-md);
+}
+
+.disclosure-content .initiatives-list li {
+    color: var(--color-text-primary);
+    line-height: var(--line-height-relaxed);
+}
+
+.disclosure-content .initiatives-list li strong {
+    color: var(--color-text-heading-secondary);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Links within disclosure content */
+.disclosure-content a.inline-link {
+    color: var(--color-link-primary);
+    text-decoration: underline;
+    transition: all var(--transition-fast);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin: -2px -4px; /* Negative margin to offset padding for better visual alignment */
+}
+
+.disclosure-content a.inline-link:hover {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    text-decoration: underline;
+}
+
+.disclosure-content a.inline-link:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    background-color: var(--color-link-hover-background);
+    color: var(--color-link-hover-text);
+}
+
+/* Special styling for the first div in external recognition section */
+.disclosure-content div[style*="margin-left"] {
+    color: var(--color-text-primary);
+    line-height: var(--line-height-base);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .disclosure-toggle {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+}

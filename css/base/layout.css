@@ -1,0 +1,230 @@
+/* =============================================================================
+   LAYOUT.CSS - Page Structure and Layout Systems using Design Tokens
+   =============================================================================
+   
+   TABLE OF CONTENTS:
+   1. Container
+      - Base container (max-width constraint)
+      - Full-width variant (edge-to-edge with minimal gutters)
+   2. Header Layout
+   3. Main Content Layout
+   4. Hero Section
+   5. Section Headings
+   6. Footer Layout
+   7. Two-Column Layout Systems
+      - Basic Two-Column Layout
+      - Sidebar-Main Layout System
+      - Image-Text Layout System
+   
+============================================================================= */
+
+/* ============================================================
+   1. CONTAINER
+   ============================================================ */
+
+.container {
+    max-width: var(--max-width-container);
+    margin: 0 auto;  
+    padding: 0 var(--spacing-lg);
+}
+
+/* Full-width variant - edge-to-edge with minimal gutters */
+.container--full-width {
+    max-width: none;
+    padding: 0 var(--spacing-md); /* Prevents content from touching viewport edges */
+}
+
+/* ============================================================
+   2. HEADER LAYOUT
+   ============================================================ */
+
+.header {
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--color-border-muted);
+    transition: background-color var(--transition-fast);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.header-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+/* Smaller screens - center stacked items */
+@media (max-width: 62em) {
+    .header-content {
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+}
+
+.header-dark-light-mode {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 62em) {
+    .header-dark-light-mode {
+        justify-content: center;
+    }
+}
+
+.branding {
+    flex-shrink: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+hr {
+    margin-top: var(--spacing-xxs);
+}
+
+.nav-link,
+.theme-toggle {
+    font-size: var(--font-size-base);
+}
+
+/* ============================================================
+   3. MAIN CONTENT LAYOUT
+   ============================================================ */
+
+.main-content {
+    padding: var(--spacing-md) 0;
+    min-height: 50vh;
+    word-wrap: break-word;
+}
+
+/* ============================================================
+   4. HERO SECTION
+   ============================================================ */
+
+.hero-description {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* ============================================================
+   5. SECTION HEADINGS
+   ============================================================ */
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-heading-primary);
+    margin-bottom: var(--spacing-sm);
+    line-height: var(--line-height-tight);
+    word-wrap: break-word;
+}
+
+/* ============================================================
+   6. FOOTER LAYOUT
+   ============================================================ */
+
+.footer {
+    padding: var(--spacing-md) 0;
+    border-top: 1px solid var(--color-border-muted);
+    background-color: transparent;
+    transition: background-color var(--transition-fast);
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.footer-text {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-base);
+}
+
+.footer-text a {
+    color: var(--color-link-primary);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+}
+
+.footer-text a:hover {
+    color: var(--color-link-hover-text);
+    text-decoration: underline;
+}
+
+.footer-text a:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   7. TWO-COLUMN LAYOUT SYSTEMS
+   ============================================================ */
+
+/* Basic Two-Column Layout */
+.column-left {
+    display: flex;
+    gap: var(--spacing-3xl);
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.column-right {
+    flex: 1;
+    min-width: 0;
+    min-width: min(400px, 100%);
+}
+
+/* Sidebar-Main Layout System */
+/* Flexible two-column layout where sidebar can be left or right */
+
+.sidebar-main-content {
+    max-width: var(--max-width-container);
+}
+
+.sidebar-main-layout {
+    display: flex;
+    gap: var(--spacing-2xl);
+    align-items: flex-start;
+    margin-bottom: var(--spacing-3xl);
+    flex-wrap: wrap;
+}
+
+.main-column {
+    flex: 3;
+    min-width: 0;
+}
+
+.main-column > * {
+    max-width: 100%;
+}
+
+.sidebar-column {
+    flex: none;
+    width: 200px;
+    min-width: 0;
+    font-size: var(--font-size-sm);
+}
+
+.sidebar-column--right {
+    margin-left: 2em;
+}
+
+/* Image-Text Layout System */
+/* Two-column layout for content with accompanying images */
+
+.content-with-image {
+    display: flex;
+    gap: var(--spacing-2xl);
+    align-items: flex-start;
+    margin: var(--spacing-xl) 0;
+    width: 100%;
+    flex-wrap: wrap;
+}

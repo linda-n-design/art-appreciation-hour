@@ -1,0 +1,83 @@
+/* Hero Image Gradients */
+
+.hero-gradient-primary {
+    background: linear-gradient(to bottom, #336990 0%, #002845 100%);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.hero-gradient-primary img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+}
+
+/* Accessible UX Library Hero Gradient */
+.hero-gradient-accessible-ux {
+    background: linear-gradient(to bottom, #0070C0, #0E2945);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-gradient-accessible-ux img {
+    max-width: 100%;
+    max-height: 6em; /* Much smaller - around 96px */
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* Specific styling for portfolio tiles to prevent clipping */
+.grid-responsive .hero-gradient-primary {
+    height: 260px !important;
+}
+
+.grid-responsive .hero-gradient-primary img {
+    max-height: 200px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Case Study Brand Backgrounds */
+/* Chase Design System - Brand gradient background */
+.tile-link-image.case-study-chase {
+    background: linear-gradient(to bottom, #015EB8, #041E42);
+}
+
+.tile-link-image.case-study-chase img {
+    max-width: 80px;
+    max-height: 80px;
+}
+
+/* QuickBooks - Brand solid background */
+.tile-link-image.case-study-quickbooks {
+    background: #0D333F;
+}
+
+.tile-link-image.case-study-quickbooks img {
+    max-width: 200px;
+    max-height: 120px;
+}
+
+/* Responsive adjustments for Accessible UX gradient */
+@media (max-width: 60em) {
+    .hero-gradient-accessible-ux {
+        padding: var(--spacing-xl);
+        min-height: 140px;
+    }
+}
+
+@media (max-width: 40em) {
+    .hero-gradient-accessible-ux {
+        padding: var(--spacing-lg);
+        min-height: 160px;
+    }
+}

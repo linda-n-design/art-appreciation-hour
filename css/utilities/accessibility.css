@@ -1,0 +1,34 @@
+/* ============================================================
+   ACCESSIBILITY FEATURES
+   ============================================================ */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --color-interactive-primary: #0066CC;
+        --color-interactive-focus: #0066CC;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+/* Visually hidden — accessible to screen readers, invisible to sighted users */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

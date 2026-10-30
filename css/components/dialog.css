@@ -1,0 +1,433 @@
+/* =============================================================================
+   DIALOG.CSS - Slide-in Panel Component
+   =============================================================================
+   A slide-in dialog panel that enters from the right side of the viewport.
+   Uses design tokens from tokens/effects.css for consistent styling.
+   
+   TABLE OF CONTENTS
+   
+   1. Dialog Container
+      - Fixed positioning and visibility states
+   
+   2. Backdrop
+      - Semi-transparent overlay
+      - Theme-specific opacity
+   
+   3. Slide-in Panel
+      - Panel positioning and animations
+      - Flexbox layout for sticky header/footer
+   
+   4. Sticky Header
+      - Header with title and close button
+      - Scroll shadow effect
+      - Title icon styling
+   
+   5. Close Button
+      - Button positioning and states
+      - Hover, focus, active states
+      - Dark mode icon treatment
+   
+   6. Back Button
+      - Tier 2 navigation button
+      - Matching close button styling
+      - Dark mode icon treatment
+   
+   7. Content Area
+      - Scrollable main content
+      - Padding and overflow
+   
+   8. Sticky Footer
+      - Footer with action buttons
+      - Button layout and spacing
+   
+   9. Responsive Adjustments
+      - Tablet breakpoint (60em)
+      - Mobile breakpoint (40em)
+   
+   10. Body Scroll Prevention
+      - .dialog-open class
+   
+   11. Reduced Motion Support
+       - Accessibility considerations
+   
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   DIALOG CONTAINER
+   Fixed positioning covers entire viewport, provides stacking context
+   ----------------------------------------------------------------------------- */
+
+.dialog {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    
+    /* Hidden by default - visibility allows child animations to work */
+    visibility: hidden;
+    pointer-events: none;
+    
+    /* Delay hiding until after animations complete (0.4s) */
+    transition: visibility 0s 0.4s;
+}
+
+/* Dialog is visible when open */
+.dialog--open {
+    visibility: visible;
+    pointer-events: auto;
+    
+    /* No delay when opening - show immediately */
+    transition: visibility 0s;
+}
+
+/* -----------------------------------------------------------------------------
+   BACKDROP
+   Semi-transparent overlay that covers the page content
+   ----------------------------------------------------------------------------- */
+
+.dialog__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-brand-secondary);
+    cursor: pointer;
+    
+    /* Backdrop fades in with smooth ease-in-out motion */
+    /* Starts invisible, fades to 50% opacity */
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-in-out-cubic);
+}
+
+/* Backdrop is visible when dialog is open */
+.dialog--open .dialog__backdrop {
+    opacity: 0.5;  /* 50% translucency in light mode */
+}
+
+/* Different color and opacity in dark mode */
+[data-theme="dark"] .dialog__backdrop {
+    background-color: var(--color-background-secondary);
+}
+
+[data-theme="dark"] .dialog--open .dialog__backdrop {
+    opacity: 0.7;  /* 70% translucency in dark mode */
+}
+
+/* -----------------------------------------------------------------------------
+   SLIDE-IN PANEL
+   The actual dialog content that slides in from the right
+   ----------------------------------------------------------------------------- */
+
+.dialog__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* Width - customizable via custom property */
+    --dialog-width: 600px;
+    width: 100%;
+    max-width: var(--dialog-width);
+    
+    /* Visual styling using tokens */
+    background-color: var(--color-background-primary);
+    box-shadow: var(--shadow-xl);
+    
+    /* Slide animation - starts off-screen with smooth ease-in-out motion */
+    transform: translateX(100%);
+    transition: transform 0.4s var(--ease-in-out-cubic);
+    
+    /* Flexbox layout for sticky header and footer */
+    display: flex;
+    flex-direction: column;
+    
+    /* Ensure panel never shows focus ring (receives focus for a11y but no visual indication) */
+    outline: none;
+}
+
+/* Panel slides in when dialog is open */
+.dialog--open .dialog__panel {
+    transform: translateX(0);
+}
+
+/* -----------------------------------------------------------------------------
+   STICKY HEADER
+   Contains title and close button, remains visible during scroll
+   ----------------------------------------------------------------------------- */
+
+.dialog__header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky-header);
+    background-color: var(--color-background-primary);
+    padding: var(--spacing-lg);
+    
+    /* Layout for title and close button */
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    
+    /* Prevent header from shrinking in flex container */
+    flex-shrink: 0;
+    
+    /* Smooth transition for shadow appearance */
+    transition: box-shadow 0.3s ease;
+}
+
+/* Shadow appears when content is scrolled AND dialog has shadow modifier */
+.dialog--shadow-on-scroll .dialog__header--scrolled {
+    box-shadow: var(--shadow-sm);
+    border-bottom: var(--border-width-thin) solid var(--color-border-primary);
+}
+
+/* Dialog title within header */
+.dialog__header h2,
+.dialog__header h1 {
+    flex: 1;
+    margin: 0;
+    line-height: var(--line-height-tight);
+}
+
+/* Icon in dialog title - uses mask to inherit title text color */
+.dialog__title-icon {
+    display: inline-block;
+    width: 0.9em;  /* Proportional to title font size */
+    height: 0.9em;
+    vertical-align: middle;
+    margin-right: var(--spacing-xs);
+    margin-top: -0.1em; /* Optical alignment */
+    
+    /* Use mask-image to make icon inherit text color */
+    /* Path assumes dialog.css is in /css/components/ and icon is in /images/ */
+    mask-image: url('../../images/icon-filter.svg');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    background-color: currentColor;
+}
+
+/* -----------------------------------------------------------------------------
+   CLOSE BUTTON
+   Positioned within sticky header for persistent access
+   ----------------------------------------------------------------------------- */
+
+.dialog__panel .dialog__close {
+    /* Static positioning within header (no longer absolute) */
+    position: static;
+    flex-shrink: 0; /* Prevent button from shrinking */
+    
+    /* Button reset */
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    
+    /* Circular button styling */
+    border-radius: var(--radius-full);
+    
+    /* Match button system transitions */
+    transition: all 0.3s ease-in-out;
+    
+    /* Flexbox for icon centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hover state - border and background appear with better visibility */
+.dialog__panel .dialog__close:hover {
+    background-color: var(--color-link-hover-background);
+    border: 2px solid var(--color-interactive-primary);
+}
+
+/* Focus state - only show visual ring for keyboard users (focus-visible) */
+.dialog__panel .dialog__close:focus-visible {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    background-color: var(--color-link-hover-background);
+    border: 2px solid var(--color-interactive-primary);
+}
+
+/* Active state */
+.dialog__panel .dialog__close:active {
+    transform: translateY(0);
+}
+
+/* Close icon styling */
+.dialog__panel .dialog__close img {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+/* Dark mode - invert close icon for better visibility */
+[data-theme="dark"] .dialog__panel .dialog__close img {
+    filter: invert(1);
+}
+
+/* -----------------------------------------------------------------------------
+   BACK BUTTON
+   Appears in header for Tier 2 navigation (e.g., filter drill-down)
+   ----------------------------------------------------------------------------- */
+
+.dialog__panel .dialog__back {
+    /* Match close button dimensions */
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    
+    /* Button reset */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    
+    /* Circular button styling */
+    border-radius: var(--radius-full);
+    
+    /* Match close button transitions */
+    transition: all 0.3s ease-in-out;
+    
+    /* Flexbox for icon centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Prevent button from shrinking */
+    flex-shrink: 0;
+    
+    /* Spacing from title */
+    margin-right: var(--spacing-sm);
+}
+
+/* Hover state - border and background appear */
+.dialog__panel .dialog__back:hover {
+    background-color: var(--color-link-hover-background);
+    border: 2px solid var(--color-interactive-primary);
+}
+
+/* Focus state - only show visual ring for keyboard users (focus-visible) */
+.dialog__panel .dialog__back:focus-visible {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    background-color: var(--color-link-hover-background);
+    border: 2px solid var(--color-interactive-primary);
+}
+
+/* Active state */
+.dialog__panel .dialog__back:active {
+    transform: translateY(0);
+}
+
+/* Back icon styling */
+.dialog__panel .dialog__back img {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+/* Dark mode - invert back icon for better visibility */
+[data-theme="dark"] .dialog__panel .dialog__back img {
+    filter: invert(1);
+}
+
+/* -----------------------------------------------------------------------------
+   CONTENT AREA
+   Main content container with padding - grows to fill available space
+   ----------------------------------------------------------------------------- */
+
+.dialog__content {
+    flex: 1; /* Allows content to grow and push footer to bottom */
+    padding: var(--spacing-lg);
+    padding-top: 0; /* Header already provides top spacing */
+    overflow-y: auto; /* Content scrolls independently */
+    overflow-x: hidden;
+}
+
+/* -----------------------------------------------------------------------------
+   STICKY FOOTER
+   Remains visible at bottom of panel, contains action buttons
+   ----------------------------------------------------------------------------- */
+
+.dialog__footer {
+    position: sticky;
+    bottom: 0;
+    z-index: var(--z-sticky-header);
+    
+    /* Visual styling */
+    background-color: var(--color-background-primary);
+    border-top: var(--border-width-thin) solid var(--color-border-primary);
+    padding: var(--spacing-md) var(--spacing-lg);
+    
+    /* Layout for buttons */
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+    align-items: center;
+    
+    /* Prevent footer from shrinking in flex container */
+    flex-shrink: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   RESPONSIVE ADJUSTMENTS
+   Panel takes full width on mobile devices
+   ----------------------------------------------------------------------------- */
+
+@media (max-width: 60em) {
+    .dialog__panel {
+        --dialog-width: 80vw;
+    }
+    
+    .dialog__header {
+        padding: var(--spacing-md);
+    }
+    
+    .dialog__content {
+        padding: var(--spacing-md);
+        padding-top: 0;
+    }
+    
+    .dialog__footer {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+}
+
+@media (max-width: 40em) {
+    .dialog__panel {
+        --dialog-width: 100vw;
+        max-width: none;
+    }
+    
+    .dialog__header {
+        padding: var(--spacing-sm);
+    }
+    
+    .dialog__content {
+        padding: var(--spacing-sm);
+        padding-top: 0;
+    }
+    
+    .dialog__footer {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+}
+
+/* -----------------------------------------------------------------------------
+   PREVENT BODY SCROLL WHEN DIALOG IS OPEN
+   Applied via JS to body element
+   ----------------------------------------------------------------------------- */
+
+.dialog-open {
+    overflow: hidden;
+}
+
+/* -----------------------------------------------------------------------------
+   REDUCED MOTION SUPPORT
+   Note: Most transitions are handled by global rule in css/utilities/accessibility.css
+   This specifically handles the visibility transition-delay edge case
+   ----------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .dialog {
+        transition: visibility 0s !important;
+    }
+}

@@ -1,0 +1,716 @@
+/* =============================================================================
+   FORM-ELEMENTS.CSS - Form Input Components
+   ============================================================================= */
+
+/* TABLE OF CONTENTS
+   =============================================================================
+   1. INPUT GROUPS & LABELS
+      - Input Group Container
+      - Text Labels
+      - Labels with Icons
+   2. NUMBER INPUTS (SPINNER)
+      - Number Input Base Styles
+      - Number Input Wrapper
+      - Custom Spinner Buttons
+      - Spinner Button Theming
+   3. SELECT DROPDOWN
+      - Select Base Styles
+      - Select Dropdown Caret (Theme-aware)
+   4. TEXT INPUT
+      - Text Input Base Styles
+      - Search Input Container
+      - Clear Button
+   5. CHECKBOX
+      - Checkbox Base Styles
+      - Checkbox Checked State
+      - Checkbox Label
+   6. HELPER & ERROR STATES
+      - Help Text
+      - Error Messages
+      - Error States
+   7. ACCESSIBILITY
+      - Focus States
+      - Screen Reader Only
+   ============================================================================= */
+
+
+/* =============================================================================
+   1. INPUT GROUPS & LABELS
+   ============================================================================= */
+
+/**
+ * Input Group Container
+ * Wrapper for form field groups with label, input, and help/error text
+ */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    position: relative; /* Allows error messages to be positioned absolutely within this container */
+    min-width: 400px; /* Ensure enough space for error messages to display without excessive wrapping */
+}
+
+/**
+ * Filter Group (for horizontal layout with label beside input)
+ * Used in filter/search interfaces
+ */
+.filter-group {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/**
+ * Text Labels
+ * Standard label styling for form inputs
+ */
+.filter-label {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-heading-secondary);
+    font-size: var(--font-size-base);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/**
+ * Label with Icon
+ * Label that includes an icon (e.g., person icon in spinners)
+ */
+.label-with-icon {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-heading-secondary);
+}
+
+.label-with-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Light mode: Apply dark blue filter (#01243E) to label icons */
+[data-theme="light"] .label-with-icon img {
+    filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%) contrast(101%);
+}
+
+/* Dark mode: Apply light gray filter (#F3F3F3) to label icons */
+[data-theme="dark"] .label-with-icon img {
+    filter: invert(98%) sepia(0%) saturate(418%) hue-rotate(231deg) brightness(117%) contrast(90%);
+}
+
+/* System preference fallbacks */
+@media (prefers-color-scheme: light) {
+    .label-with-icon img {
+        filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%) contrast(101%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .label-with-icon img {
+        filter: invert(98%) sepia(0%) saturate(418%) hue-rotate(231deg) brightness(117%) contrast(90%);
+    }
+}
+
+
+/* =============================================================================
+   2. NUMBER INPUTS (SPINNER)
+   ============================================================================= */
+
+/**
+ * Number Input Base Styles
+ * Styling for number inputs with custom spinners
+ */
+.number-input {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+    width: 5em;
+    height: 44px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.number-input:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-color: var(--color-interactive-focus);
+}
+
+.number-input.error {
+    border-color: var(--color-error-primary);  /* Uses token: #D32F2F in light, #DC5B97 in dark */
+    border-width: 2px;
+    background-color: #FFEBEE;
+    box-shadow: 0 0 0 1px var(--color-error-primary);  /* Matches border color */
+}
+
+[data-theme="dark"] .number-input.error {
+    background-color: #4A1F1F;
+    box-shadow: 0 0 0 1px var(--color-error-primary);  /* Uses dark mode token: #DC5B97 */
+}
+
+/* Dark mode: Error focus outline matches error color */
+[data-theme="dark"] .number-input:focus-visible.error {
+    outline-color: var(--color-error-primary);  /* Uses dark mode token: #DC5B97 */
+}
+
+/* Hide default browser number spinners */
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.number-input {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield;
+}
+
+/**
+ * Number Input Wrapper
+ * Container for number input with custom spinners
+ */
+.number-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 5em;
+}
+
+/**
+ * Custom Spinner Buttons Container
+ * Up/down arrow buttons for number inputs
+ */
+.spinner-buttons {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* Gap between up and down icons */
+    padding: 1px 0; /* 1px padding top and bottom */
+}
+
+/* Individual spinner button styling */
+.spinner-up,
+.spinner-down {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px; /* 20px icons (fills entire button) */
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-fast);
+}
+
+.spinner-up:hover,
+.spinner-down:hover {
+    opacity: 0.7;
+}
+
+.spinner-up:active,
+.spinner-down:active {
+    opacity: 0.5;
+}
+
+/**
+ * Spinner Button Theming
+ * Theme-aware icons for spinner up/down buttons
+ */
+
+/* Light mode spinner icons */
+[data-theme="light"] .spinner-up {
+    background-image: url('../../images/icon-caret-up.svg');
+    filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%); /* #01243E */
+}
+
+[data-theme="light"] .spinner-down {
+    background-image: url('../../images/icon-caret-down.svg');
+    filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%); /* #01243E */
+}
+
+/* Dark mode spinner icons */
+[data-theme="dark"] .spinner-up {
+    background-image: url('../../images/icon-caret-up.svg');
+    filter: brightness(0) invert(1); /* #F3F3F3 - light gray */
+}
+
+[data-theme="dark"] .spinner-down {
+    background-image: url('../../images/icon-caret-down.svg');
+    filter: brightness(0) invert(1); /* #F3F3F3 - light gray */
+}
+
+/* System preference fallbacks */
+@media (prefers-color-scheme: light) {
+    .spinner-up {
+        background-image: url('../../images/icon-caret-up.svg');
+        filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%);
+    }
+
+    .spinner-down {
+        background-image: url('../../images/icon-caret-down.svg');
+        filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .spinner-up {
+        background-image: url('../../images/icon-caret-up.svg');
+        filter: brightness(0) invert(1);
+    }
+
+    .spinner-down {
+        background-image: url('../../images/icon-caret-down.svg');
+        filter: brightness(0) invert(1);
+    }
+}
+
+
+/* =============================================================================
+   3. SELECT DROPDOWN
+   ============================================================================= */
+
+/**
+ * Select Base Styles
+ * Custom styled select dropdown with theme-aware caret
+ */
+.select-input {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+    width: 5em;
+    height: 44px;
+    cursor: pointer;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 1em 1em;
+    padding-right: 32px;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 44px;
+}
+
+.select-input:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-color: var(--color-interactive-focus);
+}
+
+/**
+ * Select Dropdown Caret (Theme-aware)
+ * SVG caret icon that adapts to light/dark themes
+ */
+
+/* Light mode - dark caret (#01243E) */
+[data-theme="light"] .select-input {
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%2301243E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Dark mode - light caret (#F3F3F3) */
+[data-theme="dark"] .select-input {
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%23F3F3F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* System preference fallbacks */
+@media (prefers-color-scheme: light) {
+    .select-input {
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%2301243E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .select-input {
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%23F3F3F3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+}
+
+
+/* =============================================================================
+   4. TEXT INPUT
+   ============================================================================= */
+
+/**
+ * Text Input Base Styles
+ * Standard text input styling (used for filter/search)
+ */
+.filter-input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    padding-right: calc(32px + var(--spacing-sm) + var(--spacing-sm)); /* clear button width + right position + gap */
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.5; /* Ensures consistent vertical alignment with icons */
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+}
+
+.filter-input:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-color: var(--color-interactive-focus);
+}
+
+.filter-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+/**
+ * Search Input Container
+ * Wrapper for search input with optional leading icon and clear button
+ */
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+/**
+ * Search Icon (Leading Icon)
+ * Icon positioned inside the input field at the left edge
+ */
+.search-input-container .search-icon {
+    position: absolute;
+    left: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+}
+
+/* Light mode: Search icon color */
+[data-theme="light"] .search-input-container .search-icon {
+    filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%) contrast(101%);
+}
+
+/* Dark mode: Search icon color */
+[data-theme="dark"] .search-input-container .search-icon {
+    filter: invert(98%) sepia(0%) saturate(418%) hue-rotate(231deg) brightness(117%) contrast(90%);
+}
+
+/**
+ * Search Input with Leading Icon
+ * Add left padding to accommodate the search icon
+ */
+.search-input-container .filter-input {
+    padding-left: calc(20px + var(--spacing-sm) + var(--spacing-sm)); /* icon width + left position + gap */
+}
+
+/**
+ * Clear Button
+ * Button to clear search/filter input - uses same icon as dialog close button
+ */
+.clear-button {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear-button img {
+    width: 32px;
+    height: 32px;
+}
+
+/* Light mode: Dark icon */
+[data-theme="light"] .clear-button img {
+    filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%) contrast(101%);
+}
+
+/* Dark mode: Light icon */
+[data-theme="dark"] .clear-button img {
+    filter: invert(98%) sepia(0%) saturate(418%) hue-rotate(231deg) brightness(117%) contrast(90%);
+}
+
+.clear-button:hover {
+    background: var(--color-link-hover-background);
+    color: var(--color-text-primary);
+}
+
+.clear-button:focus {
+    outline: 2px solid var(--color-interactive-focus);
+    outline-offset: 1px;
+    background: var(--color-link-hover-background);
+}
+
+
+/* =============================================================================
+   5. CHECKBOX
+   ============================================================================= */
+
+/**
+ * Checkbox Group
+ * Container for checkbox with label
+ */
+.checkbox-group {
+    display: flex;
+    align-items: flex-start; /* Align checkbox to top/first line of label text */
+    gap: var(--spacing-sm);
+}
+
+/**
+ * Checkbox Base Styles
+ * Custom styled checkbox with theme-aware colors
+ */
+
+/* Remove default checkbox appearance for both light and dark modes */
+.checkbox-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    position: relative; /* Needed for ::after positioning */
+    transition: all var(--transition-fast);
+    flex-shrink: 0; /* Prevent checkbox from shrinking when label wraps */
+    margin-top: 0.3em; /* Align checkbox with text baseline instead of top of container */
+}
+
+/* Light mode: Unchecked state */
+.checkbox-group input[type="checkbox"] {
+    border: 1px solid var(--color-border-primary); /* Same as input boxes */
+    background-color: transparent;
+}
+
+/**
+ * Checkbox Checked State
+ * Styling for checked state with checkmark icon
+ */
+
+/* Light mode: Checked state - Blue background */
+.checkbox-group input[type="checkbox"]:checked {
+    background-color: var(--color-brand-primary); /* #0070C0 */
+    border-color: var(--color-brand-primary);
+}
+
+/* Light mode: White checkmark icon using ::after */
+.checkbox-group input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the checkmark */
+    width: 18px;
+    height: 18px;
+    background-image: url('../../images/icon-check-mark.svg');
+    background-size: 18px 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0) invert(1); /* Makes black SVG white */
+}
+
+/* Light mode: Focus state */
+.checkbox-group input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+}
+
+/* Dark mode: Unchecked state - White border, transparent background */
+[data-theme="dark"] .checkbox-group input[type="checkbox"] {
+    border: 1.5px solid #FFFFFF;
+    background-color: transparent;
+}
+
+/* Dark mode: Checked state - Yellow background */
+[data-theme="dark"] .checkbox-group input[type="checkbox"]:checked {
+    background-color: #D0CF94; /* Yellow - matches select labels */
+    border-color: #D0CF94;
+}
+
+/* Dark mode: Dark checkmark icon using ::after */
+[data-theme="dark"] .checkbox-group input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the checkmark */
+    width: 18px;
+    height: 18px;
+    background-image: url('../../images/icon-check-mark.svg');
+    background-size: 18px 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: invert(10%) sepia(35%) saturate(2738%) hue-rotate(184deg) brightness(95%); /* Makes black SVG dark blue #022C4B */
+}
+
+/* Dark mode: Focus state */
+[data-theme="dark"] .checkbox-group input[type="checkbox"]:focus-visible {
+    outline: 2px solid #58A6FF;
+    outline-offset: 2px;
+}
+
+/**
+ * Checkbox Label
+ * Label text for checkbox
+ */
+.checkbox-label {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+
+/* =============================================================================
+   6. HELPER & ERROR STATES
+   ============================================================================= */
+
+/**
+ * Help Text
+ * Descriptive text below form inputs
+ */
+.help-text {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-base);
+    display: block;
+}
+
+/**
+ * Error Messages
+ * Error message styling with icon
+ */
+.error-message {
+    /* Hide error by default */
+    display: none;
+    
+    /* Layout when visible */
+    align-items: flex-start; /* Align items to top when text wraps to multiple lines */
+    gap: 8px;
+    
+    /* Text styling */
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular); /* Regular weight, not bold */
+    color: var(--color-error-primary); /* Uses token: #D32F2F in light, #DC5B97 in dark */
+    line-height: var(--line-height-tight); /* 1.2 - Tighter spacing for compact error messages */
+    
+    /* Positioning - appears to the right of the input field with 1em padding */
+    position: absolute;
+    left: 6em; /* 5em input width + 1em gap */
+    top: calc(2em - 4px); /* Positioned 4px higher for better alignment */
+    max-width: 500px; /* Wider to prevent excessive text wrapping */
+    white-space: normal; /* Allow text to wrap naturally */
+}
+
+/* Show error message when it has the 'visible' class */
+.error-message.visible {
+    display: flex; /* Changes from 'none' to 'flex' to show the error */
+}
+
+/* Error icon inside error message */
+.error-message img.error-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0; /* Prevents icon from being squished */
+    margin-top: 0.1em; /* Slight adjustment to align with first line of text */
+}
+
+
+
+
+/* =============================================================================
+   6. RADIO BUTTONS
+   ============================================================================= */
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    padding: var(--spacing-sm) 0;
+}
+
+.radio-label input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border-primary);
+    border-radius: 50%;
+    background: var(--color-background-primary);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.radio-label input[type="radio"]:checked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-brand-primary);
+}
+
+.radio-label input[type="radio"]:focus {
+    outline: 2px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+}
+
+.radio-label input[type="radio"]:hover {
+    border-color: var(--color-interactive-primary);
+}
+
+/* =============================================================================
+   7. ACCESSIBILITY
+   ============================================================================= */
+
+/**
+ * Screen Reader Only Content
+ * Visually hidden but accessible to screen readers
+ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

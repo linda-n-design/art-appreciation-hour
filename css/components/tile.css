@@ -1,0 +1,386 @@
+/* =============================================================================
+   TILE.CSS - Universal Tile Component System
+   ============================================================================= */
+
+/* =============================================================================
+   TILE DIMENSION TOKENS
+   Component-specific dimension tokens for tile windows
+   ============================================================================= */
+   
+:root {
+    --tile-window-height-min: 8.75em;    /* ~140px at 16px base - flexible minimum */
+    --tile-window-height-fixed: 10em;  /* ~160px at 16px base - fixed for gallery */
+}
+
+/* TABLE OF CONTENTS
+   =============================================================================
+   1. BASE TILE COMPONENT
+   2. TILE VARIANTS
+      - Tile Muted
+      - Tile Regular
+      - Tile with Drop Shadow
+   3. INTERACTIVE TILE LINKS
+      - Tile-link (Base)
+      - Tile-link with Footer CTA
+      - Tile-link with Image
+   4. TILE SUBCOMPONENTS
+      - Tile Header
+      - Tile Body
+      - Tile Footer
+      - Tile Image
+   5. TILE GRIDS & LAYOUTS
+   6. ACCESSIBILITY & RESPONSIVE
+   ============================================================================= */
+
+
+/* =============================================================================
+   1. BASE TILE COMPONENT
+   ============================================================================= */
+
+/**
+ * Base tile component - provides foundational structure and styling
+ * All tile variants extend from this base
+ */
+.tile {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-background-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm);
+    box-sizing: border-box;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+}
+
+
+/* =============================================================================
+   2. TILE VARIANTS
+   ============================================================================= */
+
+/**
+ * Tile Muted - subtle border, minimal visual weight
+ * Use for: Secondary content, background tiles, low-emphasis containers
+ */
+.tile-muted {
+    border: 1px solid var(--color-border-muted);
+        padding:  var(--spacing-md);
+}
+
+/**
+ * Tile Regular - standard border, default tile appearance
+ * Use for: General purpose tiles, card-like containers
+ */
+.tile-regular {
+    border: 1px solid var(--color-border-primary);
+    padding: var(--spacing-lg);
+}
+
+/* =============================================================================
+   3. INTERACTIVE TILE LINKS
+   ============================================================================= */
+
+/**
+ * Tile-link - Base interactive tile that acts as a clickable link
+ * Extends base tile with interactive states
+ * Use for: Navigation cards, clickable items
+ */
+.tile-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    color: inherit;
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm);
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    /* Override default link horizontal margins only */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.tile-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+}
+
+.tile-link:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    text-decoration: none;
+}
+
+/**
+ * Tile-link-no-image
+ * Interactive tile without image, with larger padding for text-only content
+ * Use for: External links, text-based cards, reference tiles
+ * 
+ * Structure:
+ * <a class="tile-link tile-link-no-image">
+ *   <h3>Title</h3>
+ *   <p>Description text...</p>
+ * </a>
+ */
+.tile-link-no-image {
+    padding: var(--spacing-lg);
+}
+
+/**
+ * Tile-link-image
+ * Image container component used within tile-link
+ * Creates a fixed-height image area with centered content
+ * 
+ * Structure:
+ * <a class="tile-link">
+ *   <div class="tile-link-image [optional-background-class]">
+ *     <img src="..." alt="...">
+ *   </div>
+ *   <div class="tile-body">
+ *     <h3 class="tile-title">...</h3>
+ *     <p>...</p>
+ *   </div>
+ * </a>
+ */
+.tile-link-image {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);  /* Changed from var(--radius-lg) var(--radius-lg) 0 0 */
+    margin-bottom: var(--spacing-sm);
+    overflow: hidden;
+}
+.tile-link:hover {
+    background-color: var(--color-link-hover-background);
+}
+
+.tile-link:hover .tile-body {
+    background-color: var(--color-link-hover-background);
+}
+
+
+/* =============================================================================
+   4. TILE SUBCOMPONENTS
+   ============================================================================= */
+
+/**
+ * Tile Title
+ * Title/heading component for tiles
+ */
+.tile-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-heading-secondary);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: var(--line-height-tight);
+    overflow-wrap: break-word;
+}
+
+/**
+ * Tile Label
+ * Label component for tile windows (component preview labels)
+ */
+.tile-label {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-heading-secondary);
+    margin: 0 0 var(--spacing-sm) var(--spacing-sm);
+    line-height: var(--line-height-tight);
+    overflow-wrap: break-word;
+}
+/**
+ * Tile Body
+ * Main content area of tile with padding
+ * Use for: Tile content areas with images (tile-link-image variant)
+ */
+.tile-body {
+    flex: 1;
+    color: var(--color-text-primary);
+    line-height: var(--line-height-base);
+    overflow-wrap: break-word;
+    padding: 0 var(--spacing-sm) var(--spacing-sm);
+}
+
+/**
+ * Tile Content
+ * Flexible content area without padding for text-only tiles
+ * Use for: Collection cards, resource tiles, text-heavy content
+ * Replaces deprecated .collection-description
+ */
+.tile-content {
+    flex: 1;
+    color: var(--color-text-primary);
+    line-height: var(--line-height-base);
+    overflow-wrap: break-word;
+    margin-bottom: var(--spacing-md);
+}
+
+/**
+ * Tile Footer
+ * Bottom section of tile, contains CTAs or metadata
+ */
+.tile-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-muted);
+    color: var(--color-link-primary);
+    font-size: var(--font-size-base);
+}
+
+.tile-footer .external-link-icon {
+    width: 0.8em;
+    height: 0.8em;
+    vertical-align: middle;
+    transition: filter var(--transition-fast);
+    flex-shrink: 0;
+}
+
+/**
+ * Background color helper for tile images
+ */
+.background-color-primary {
+    background-color: var(--color-brand-primary);
+}
+
+/**
+ * Tile Window (Preview/Display Container)
+ * Non-interactive display area within tiles
+ * Use for: Component previews, visual samples
+ * 
+ * Base: Centered layout for single items (buttons, icons, components)
+ * Modifier: --stack for multiple stacked items (definition lists, code blocks)
+ */
+.tile-window {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border-muted);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-secondary);
+    padding: var(--spacing-sm);
+    min-height: var(--tile-window-height-min);
+    pointer-events: none;
+}
+
+/* Contextual: Fixed height when inside tile-link (component gallery) */
+.tile-link .tile-window {
+    height: var(--tile-window-height-fixed);
+    min-height: unset;
+    overflow: hidden;
+}
+
+/* Variant: Stack layout for multiple items */
+.tile-window--stack {
+    display: block;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--spacing-lg) var(--spacing-2xl);
+}
+
+/* Variant: No padding for full-bleed content */
+.tile-window--no-padding {
+    padding: 0;
+}
+
+/* =============================================================================
+   5. TILE GRIDS & LAYOUTS
+   ============================================================================= */
+
+/**
+ * RESPONSIVE GRID SYSTEM (New)
+ * Mobile-first responsive grid with variants for different tile sizes
+ * Replaces the old auto-fit grids below
+ */
+
+/**
+ * Base responsive grid - mobile first approach
+ * Single column on mobile, responsive columns on larger screens
+ */
+.grid-responsive {
+    display: grid;
+    gap: var(--spacing-2xl);
+    width: 100%;
+}
+
+/**
+ * Grid variant: Narrow tiles (3 columns on desktop)
+ * Use for: Component tiles, small cards
+ * Breakpoints: 1 column → 2 columns → 3 columns
+ */
+.grid-responsive--narrow {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 40em) {
+    .grid-responsive--narrow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 60em) {
+    .grid-responsive--narrow {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/**
+ * Grid variant: Medium tiles (2 columns on desktop)
+ * Use for: Case study tiles, medium cards
+ * Breakpoints: 1 column → 2 columns
+ */
+.grid-responsive--medium {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 40em) {
+    .grid-responsive--medium {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =============================================================================
+   6. ACCESSIBILITY & RESPONSIVE
+   ============================================================================= */
+
+/**
+ * Reduce motion for users who prefer it
+ */
+@media (prefers-reduced-motion: reduce) {
+    .tile-link,
+    .tile-link-image {
+        transition: none;
+    }
+    
+    .tile-link:hover,
+    .tile-link-image:hover {
+        transform: none;
+    }
+}
+
+/**
+ * Enhanced contrast for high contrast mode
+ */
+@media (prefers-contrast: high) {
+    .tile-link:focus,
+    .tile-link-image:focus {
+        outline-width: 4px;
+    }
+}
+
+/**
+ * Responsive adjustments
+ */

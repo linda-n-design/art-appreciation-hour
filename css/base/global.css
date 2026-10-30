@@ -1,0 +1,294 @@
+/* =============================================================================
+   GLOBAL.CSS - Global Base Styles
+   =============================================================================
+   This file contains foundational styles that apply globally:
+   - Body and HTML defaults
+   - Typography base styles
+   - Link styles
+   - Accessibility enhancements
+   ============================================================================= */
+
+/* ============================================================
+   RESET AND BASE STYLES
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================================================================
+   BODY STYLES
+   ========================================================================= */
+
+body {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+    background: linear-gradient(to bottom, var(--color-background-body-start), var(--color-background-body-end));
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-bottom: 80px; /* Space for footer above toast/back-to-top button */
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+/* =========================================================================
+   TYPOGRAPHY BASE STYLES
+   ========================================================================= */
+
+/* Paragraphs */
+p {
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: var(--spacing-sm); /* Apply consistent bottom margin */
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-primary);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+/* Ensure branding and subtitle elements are not affected by <p> */
+.branding p,
+.site-subtitle p {
+    margin: 0; /* Remove margins for nested <p> elements */
+}
+
+/* Headings - Base Styles */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-tight);
+}
+
+/* Heading Colors */
+h1, h2 {
+    color: var(--color-text-heading-primary);
+}
+
+h3, h5, h6 {
+    color: var(--color-text-heading-secondary);
+}
+
+h4 {
+    color: var(--color-text-heading-primary);
+}
+
+/* Heading Sizes and Spacing */
+h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+h4 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+/* Horizontal rule */
+hr {
+    margin-top: var(--spacing-xxs);
+    border: none;
+    border-top: 1px solid var(--color-border-muted);
+}
+
+/* =========================================================================
+   LINK STYLES
+   ========================================================================= */
+
+/* Default Link Styles */
+a {
+    color: var(--color-link-primary);
+    text-decoration: underline;
+    transition: all 0.4s ease;
+    padding: var(--spacing-sm) var(--spacing-sm);
+    border-radius: var(--radius-lg);
+    display: inline-block;
+}
+
+/* Hover and Focus - Exclude TOC links */
+a:hover:not(.toc-link), 
+a:focus:not(.toc-link) {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    box-shadow: 0 0 0 8px var(--color-link-hover-background);
+    outline: none;
+    transition: 0.4s;
+}
+
+/* Inline Link Styles - Stationary behavior for content links */
+a.inline-link {
+    padding: var(--spacing-sm) var(--spacing-sm);
+    margin: 0;
+    border-radius: var(--radius-lg);
+    display: inline;
+    text-decoration: underline;
+    transition: all 0.4s ease;
+}
+
+a.inline-link:hover {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    text-decoration: underline;
+    outline: none;
+}
+
+a.inline-link:focus {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    border-radius: var(--radius-lg);
+    text-decoration: underline;
+}
+
+/* Text Link Styles - No padding, inline text behavior */
+a.text-link {
+    padding: 0;
+    margin: 0;
+    border-radius: var(--radius-sm);
+    display: inline;
+    text-decoration: underline;
+    transition: all 0.4s ease;
+}
+
+a.text-link:hover {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    text-decoration: underline;
+    outline: none;
+}
+
+a.text-link:focus {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    outline: 2px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+    text-decoration: underline;
+}
+
+/* TOC Link Hover and Focus Styles */
+.toc-link:hover, .toc-link:focus {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    box-shadow: 0 0 0 8px var(--color-link-hover-background);
+    outline: none;
+    transition: 0.4s;
+}
+
+/* =========================================================================
+   CONTAINER
+   ========================================================================= */
+
+.container {
+    max-width: var(--max-width-container);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* =========================================================================
+   TYPOGRAPHY UTILITY CLASSES
+   ========================================================================= */
+
+.atkinson-hyperlegible-regular {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-regular);
+    font-style: normal;
+}
+
+.atkinson-hyperlegible-bold {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-bold);
+    font-style: normal;
+}
+
+.atkinson-hyperlegible-regular-italic {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-regular);
+    font-style: italic;
+}
+
+.atkinson-hyperlegible-bold-italic {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-bold);
+    font-style: italic;
+}
+
+/* =========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================= */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --color-interactive-primary: #0066CC;
+        --color-interactive-focus: #0066CC;
+    }
+}
+
+/* Screen reader only class */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Visible on focus for skip links etc */
+.sr-only-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* Restore spacing for layout elements */
+header {
+    padding: var(--spacing-lg) 0; /* Add vertical spacing */
+}
+
+h1, h2 {
+    margin: var(--spacing-md) 0; /* Add top and bottom margins */
+}
+
+/* Increase specificity for header spacing adjustments */
+header .header-content {
+    gap: var(--spacing-xs); /* Reduce spacing between header elements */
+}
+
+header .branding {
+    margin-bottom: var(--spacing-xs); /* Reduce space below branding */
+}
+
+header .site-subtitle {
+    margin-top: 0; /* Remove extra space above subtitle */
+}
+
+/* Ensure proper spacing between branding elements */
+.branding {
+    margin-bottom: var(--spacing-xs); /* Apply spacing-xs between branding elements */
+}
+
+.site-subtitle {
+    margin-top: var(--spacing-xs); /* Apply spacing-xs above subtitle */
+}

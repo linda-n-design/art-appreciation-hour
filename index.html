@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Appreciation Hour</title>
+  <meta name="description" content="One artwork, one hour, shared with fellow art lovers.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="ai-training" content="deny">
+
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme') ||
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="css/microsite.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components/buttons.css">
+</head>
+<body>
+  <header class="microsite-header">
+    <div class="container--full-width">
+      <div class="microsite-header__content">
+        <div class="microsite-header__actions">
+          <button class="btn btn--theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <img src="images/icon-moon-solid-full.svg" alt="" class="btn__icon">
+            <span class="btn__text">Dark</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content" id="main-content">
+    <div class="container--full-width">
+      <h1 class="display">Art Appreciation Hour</h1>
+      <p class="heading-medium">One artwork, one hour, shared with fellow art lovers.</p>
+    </div>
+
+    <hr class="section-divider" role="presentation">
+
+    <div class="container">
+      <section aria-labelledby="welcome-heading">
+        <h2 class="heading-large" id="welcome-heading">Welcome</h2>
+        <p>We look closely at a single artwork, spend time in quiet contemplation, and share what we observe and feel. Same artwork, different perspectives, over Zoom.</p>
+      </section>
+
+      <section aria-labelledby="about-heading">
+        <h2 class="heading-large" id="about-heading">About</h2>
+        <p>
+          Art Appreciation Hour is inspired by the global event
+          <a href="https://www.slowartday.com/about/" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon">Slow Art Day <img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a>,
+          by long-form writing focused on a single artwork, like the New York Times series
+          <a href="https://www.nytimes.com/interactive/2021/arts/close-read.html" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon"><cite>Close Read</cite> <img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a>
+          and a Financial Times column by
+          <a href="https://www.ft.com/enuma-okoro" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon">Enuma Okoro <img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a>,
+          and by Matthew Wilson’s
+          <a href="https://www.thamesandhudsonusa.com/books/art-unpacked-50-works-of-art-uncovered-explored-explained-hardcover" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon"><cite>Art Unpacked</cite> <img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a>.
+        </p>
+      </section>
+
+      <section aria-labelledby="inaugural-heading">
+        <h2 class="heading-large" id="inaugural-heading">Inaugural event</h2>
+        <p>The invitation and Zoom link are shared through <a href="https://sotp.circle.so" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon">School of the Possible<img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a></p>
+
+        <p><time datetime="2026-11-09"><strong>Monday, November 9</strong></time></p>
+        <ul class="list-unstyled">
+          <li>8–9 AM PT <span aria-hidden="true">🌁</span></li>
+          <li>11 AM–12 PM ET <span aria-hidden="true">🗽</span></li>
+          <li>4–5 PM GMT <span aria-hidden="true">🏰</span></li>
+          <li>5–6 PM CET <span aria-hidden="true">🏛️</span></li>
+          <li>9:30–10:30 PM India <span aria-hidden="true">🐅</span></li>
+        </ul>
+        <p class="event-focus">Let’s chat about Remedios Varo’s 1956 painting <cite>Armonía (Harmony)</cite>, shown on these pages:</p>
+        <ul class="list-regular">
+          <li><a href="https://www.wikiart.org/en/remedios-varo/harmony-1956" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon">Harmony (1956) on WikiArt <img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a></li>
+          <li><a href="https://www.artic.edu/articles/1052/the-dueling-dualities-of-remedios-varo" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon">The Dueling Dualities of Remedios Varo, Art Institute of Chicago <img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a></li>
+          <li><a href="https://patrons.org.es/remedios-varo-science-fictions/" target="_blank" rel="noopener noreferrer" class="inline-link trailing-icon">Remedios Varo: Science Fictions <img src="images/icon-external-link.svg" alt="opens in new tab or window" class="external-link-icon"></a> (Harmony is the fourth image down)</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="agenda-heading">
+        <h2 class="heading-large" id="agenda-heading">Agenda</h2>
+        <ul class="list-unstyled">
+          <li><strong>5 minutes</strong>: Hellos and introductions</li>
+          <li><strong>5 minutes</strong>: Introduction to the artwork</li>
+          <li><strong>10 minutes</strong>: Silent looking</li>
+          <li><strong>35 minutes</strong>: Conversation</li>
+          <li><strong>5 minutes</strong>: Goodbyes</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- Back to Top Button -->
+  <button class="btn btn--floating" id="back-to-top">
+    <img src="images/icon-up.svg" alt="" class="btn__icon">
+    <span>Back to top</span>
+  </button>
+
+  <!-- Site Scripts -->
+  <script src="js/theme-toggle.js"></script>
+  <script src="js/back-to-top.js"></script>
+</body>
+</html>

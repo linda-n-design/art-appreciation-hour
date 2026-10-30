@@ -1,0 +1,147 @@
+/* toc.css - Table of Contents Link Styles */
+/* Background applied to <li>, text styling on <a> */
+
+/* Create space on left for TOC backgrounds to extend into */
+#toc-sidebar .sidebar-section {
+    padding-left: var(--spacing-sm); /* Creates the space */
+    overflow: visible;
+    margin-bottom: var(--spacing-xl);
+}
+
+/* TOC heading - stays within the padding, aligned left */
+#toc-sidebar .sidebar-section h2 {
+    margin-bottom: var(--spacing-md);
+}
+
+/* TOC List Container - Remove default spacing */
+#toc-sidebar .toc-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* TOC List Items - Extend left into the parent's padding space */
+#toc-sidebar .toc-item {
+    list-style: none;
+    margin: 0;
+    margin-left: calc(var(--spacing-md) * -1); /* Extends back into parent's padding */
+    padding: 0;
+    background-color: transparent;
+    transition: background-color var(--transition-fast);
+}
+
+/* Hover on list item - Background extends left of text */
+#toc-sidebar .toc-item:hover {
+    background-color: var(--color-link-hover-background);
+}
+
+/* Active state on list item - When section is in view */
+#toc-sidebar .toc-item.active {
+    background-color: var(--color-link-hover-background);
+}
+
+/* TOC Links - Padding brings text back to align with h2 */
+#toc-sidebar .toc-item .toc-link {
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-md); 
+    /* Left padding = parent's padding, keeps text aligned with h2 */
+    margin: 0;
+    text-decoration: none;
+    color: var(--color-link-primary);
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: color var(--transition-fast);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Hover State - Text color change only */
+#toc-sidebar .toc-item:hover .toc-link {
+    color: var(--color-link-hover-text);
+}
+
+/* Focus State - ONLY underline, NO background change */
+#toc-sidebar .toc-item .toc-link:focus,
+#toc-sidebar .toc-item .toc-link:focus-visible {
+    color: var(--color-link-primary) !important;
+    background-color: transparent !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Active State - Current Section text styling */
+#toc-sidebar .toc-item.active .toc-link {
+    color: var(--color-brand-primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Active + Hover - Text stays brand primary */
+#toc-sidebar .toc-item.active:hover .toc-link {
+    color: var(--color-brand-primary);
+}
+
+/* Active + Focus - No background, just underline */
+#toc-sidebar .toc-item.active .toc-link:focus {
+    background-color: transparent !important;
+    text-decoration: underline !important;
+    box-shadow: none !important;
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+    #toc-sidebar .toc-item,
+    #toc-sidebar .toc-item .toc-link {
+        transition: none;
+    }
+}
+
+@media (prefers-contrast: high) {
+    #toc-sidebar .toc-item .toc-link:focus {
+        text-decoration-thickness: 3px;
+    }
+}
+
+/* Removed all testing borders */
+#toc-sidebar {
+    outline: none !important;
+}
+
+.sidebar-main-layout {
+    outline: none !important;
+}
+
+.main-column {
+    outline: none !important;
+}
+
+/* Ensure the parent container does not constrain sticky behavior */
+.sidebar-main-layout {
+    overflow: visible;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Allow independent scrolling for the main content */
+.main-column {
+    overflow: visible;
+    flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    #toc-sidebar {
+        position: static !important; /* Ensure sticky is disabled */
+        margin-bottom: var(--spacing-md); /* Add spacing below TOC */
+    }
+}
+
+/* Removed border for #toc-sidebar */
+#toc-sidebar {
+    border: none !important;
+}

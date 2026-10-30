@@ -1,0 +1,174 @@
+/* =============================================================================
+   APP-HEADER.CSS - Application Header Component
+   =============================================================================
+   
+   Full-width header for data-focused applications (e.g., Sound & Vision table).
+   Displays page title, record count, and action buttons (filter, theme toggle).
+   
+   STRUCTURE:
+   - Left: Page title (H1) + record count stats
+   - Right: Action buttons (Filter, Theme Toggle)
+   
+   TABLE OF CONTENTS:
+   1. App Header Container
+      - Base styles and positioning
+      - Background, borders, padding
+   2. Header Content Layout
+      - Flexbox arrangement
+      - Spacing and alignment
+   3. Left Section - Title & Stats
+      - Title styling (H1)
+      - Stats counter styling
+   3a. Back Button (Navigation)
+      - Now handled by links.css (.link--icon-only)
+   4. Right Section - Action Buttons
+      - Button container layout
+      - Button size normalization
+      - Background and border overrides
+   5. Responsive Adjustments
+      - Tablet (max-width: 60em) - stacking layout
+      - Mobile (max-width: 40em) - centered layout
+   
+============================================================================= */
+
+/* ========================================
+   1. App Header Container
+   ======================================== */
+
+.app-header {
+    background-color: var(--color-background-secondary);
+    border-bottom: none; /* No border - table header has its own */
+    padding: var(--spacing-md) 0;
+    transition: background-color var(--transition-fast);
+}
+
+/* ========================================
+   2. Header Content Layout
+   ======================================== */
+
+.app-header__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+/* ========================================
+   3. Left Section - Title & Stats
+   ======================================== */
+
+.app-header__title-section {
+    display: flex;
+    align-items: center; /* Changed from baseline - better alignment for icon */
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.app-header__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-heading-primary);
+    margin: 0;
+    line-height: var(--line-height-tight);
+    white-space: nowrap;
+}
+
+.app-header__stats {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+/* ========================================
+   3a. Back Button (Navigation)
+   ======================================== */
+
+/* Back button styling moved to links.css as .link--icon-only variant */
+/* Use: <a href="..." class="link link--icon-only">...</a> */
+
+/* ========================================
+   4. Right Section - Action Buttons
+   ======================================== */
+
+.app-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* Ensure all buttons in app-header match sizing and styling */
+.app-header__actions .btn {
+    font-size: var(--font-size-base);
+    background: none; /* Match theme toggle - no filled background */
+    padding: 0 var(--spacing-md);
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+    line-height: 1;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* Hover state for all buttons in app-header */
+.app-header__actions .btn:hover {
+    background-color: var(--color-link-hover-background);
+}
+
+/* Override any filled backgrounds from btn--regular */
+.app-header__actions .btn--regular {
+    background: none;
+    border: 1px solid currentColor; /* Keep outline, match theme toggle */
+}
+
+/* Light mode: Match theme toggle color (navy) */
+[data-theme="light"] .app-header__actions .btn--regular {
+    color: var(--color-brand-secondary);
+}
+
+/* App header button variant - for action buttons (Filter, etc.) */
+/* Matches theme toggle sizing but uses regular button semantics */
+.btn--app-header {
+    /* Same visual style as btn--regular but semantically appropriate for app header actions */
+    /* Icon color will inherit correctly from base button styles */
+}
+
+/* ========================================
+   5. Responsive Adjustments
+   ======================================== */
+
+/* Tablet and below - stack elements */
+@media (max-width: 60em) {
+    .app-header__content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+    
+    .app-header__title-section {
+        width: 100%;
+    }
+    
+    .app-header__actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* Mobile - center actions only, keep title section left-aligned */
+@media (max-width: 40em) {
+    .app-header__content {
+        align-items: flex-start; /* Keep left-aligned, not centered */
+    }
+    
+    .app-header__title-section {
+        flex-direction: row; /* Keep horizontal layout */
+        align-items: center; /* Center icon with text */
+        gap: var(--spacing-sm); /* Tighter gap on mobile */
+        flex-wrap: wrap; /* Allow wrapping if needed */
+    }
+    
+    .app-header__actions {
+        width: 100%;
+        justify-content: flex-end; /* Actions stay right-aligned */
+    }
+}

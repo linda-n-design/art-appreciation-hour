@@ -1,0 +1,116 @@
+/* =============================================================================
+   MICROSITE.CSS - Microsite Header and Title Section
+   =============================================================================
+
+   Shared rules extracted from the portfolio's playlist-visualized.css so this
+   site matches it. Playlist-specific rules (logo image swap, background-image
+   dividers, heart icon, chart headings) are intentionally left out.
+
+   Link this file first in <head>, ahead of styles.css, which is the same
+   cascade position the page stylesheet has in the portfolio.
+
+   Contents:
+   1. Microsite Header
+   2. Title Section (centered h1 and tagline)
+   3. Prose Width Constraint
+   4. Inaugural Event Spacing
+
+============================================================================= */
+
+/* ========================================
+   1. Microsite Header
+   ======================================== */
+
+/*
+   Minimal header for microsite pages.
+   Positions action buttons (theme toggle, etc.) to match app-header position.
+*/
+
+.microsite-header {
+    background-color: transparent;
+    border-bottom: none;
+    padding: var(--spacing-md) 0; /* Match app-header padding */
+    margin: 0; /* Remove any default margin */
+}
+
+/* Content wrapper - matches app-header__content structure */
+.microsite-header__content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Push actions to the right */
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+/* Position button container to the right, matching app-header__actions */
+.microsite-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-top: 2px; /* Compensate for vertical alignment difference with app-header */
+}
+
+/* Match app-header button sizing */
+.microsite-header__actions .btn {
+    font-size: var(--font-size-base);
+    background: var(--color-background-primary); /* Opaque background in default state */
+    padding: 0 var(--spacing-md);
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+    line-height: 1;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* Hover state for buttons */
+.microsite-header__actions .btn:hover {
+    background-color: var(--color-link-hover-background);
+}
+
+/* ========================================
+   2. Title Section
+   ======================================== */
+
+/* Center-align the title and tagline in the first container of the page */
+.microsite-header ~ .main-content .container--full-width:first-child {
+    text-align: center;
+}
+
+.microsite-header ~ .main-content .container--full-width:first-child h1 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg); /* Space between title and tagline */
+}
+
+.microsite-header ~ .main-content .container--full-width:first-child p {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl); /* More space below tagline */
+    /* max-width (section 3) clips the paragraph left; auto margins re-center it */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========================================
+   3. Prose Width Constraint
+   ======================================== */
+
+/*
+  Caps headings and paragraphs at 60ch for optimal line length readability.
+  Scoped to .main-content only so dialog headings, figcaptions, and chart
+  containers are unaffected.
+*/
+
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content p {
+    max-width: 60ch;
+}
+
+/* ========================================
+   4. Inaugural Event Spacing
+   ======================================== */
+
+/* Space between the list of times and the "Let's chat about..." paragraph */
+.event-focus {
+    margin-top: var(--spacing-3xl);
+}

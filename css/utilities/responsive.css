@@ -1,0 +1,347 @@
+/* ============================================================================
+   RESPONSIVE.CSS - Zoom-Aware Media Queries using Design Tokens
+   ============================================================================
+   
+   This file handles responsive behavior across all viewport sizes and zoom levels.
+   
+   BREAKPOINT STRATEGY:
+   - min-width: 60.0625em         = Desktop two-column layout (explicit gap control)
+   - max-width: 60em   (960px)    = Tablet/zoom — stacks to single column
+   - max-width: 40em   (640px)    = Mobile/high zoom — further optimizations
+   - max-width: 576px             = iPhone SE and similar small devices
+   - max-width: 20em   (320px)    = Ultra-compact/extreme zoom
+   
+   The em-based breakpoints are designed to catch 200% zoom levels:
+   - 60em catches 200% zoom on 1920px desktop screens
+   - 40em catches 200% zoom on tablet screens
+   - 20em catches 200% zoom on 640px mobile screens
+   
+============================================================================ */
+
+/* ============================================================================
+   DESKTOP TWO-COLUMN LAYOUT (min-width: 60.0625em)
+   ============================================================================
+   Explicitly sets the horizontal gap between the main content column and the
+   sidebar when the two-column layout is active. Using column-gap (rather than
+   gap) ensures the vertical gap used in the stacked/mobile layout is unaffected.
+   60.0625em is one pixel above the stacking breakpoint to avoid overlap.
+============================================================================ */
+
+@media (min-width: 60.0625em) {
+    .sidebar-main-layout {
+        column-gap: var(--spacing-3xl); /* ~48-64px - uses spacing token from spacing.css */
+    }
+}
+
+/* ============================================================================
+   TABLET AND SMALLER DESKTOP SCREENS (max-width: 60em / 960px)
+   ============================================================================
+   Triggers when viewport is 960px or narrower, OR when zoomed to 200% on 
+   1920px desktop screens. Layout changes to single column.
+============================================================================ */
+
+@media (max-width: 60em) {
+    
+    /* === HEADER LAYOUT === */
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--spacing-lg);
+    }
+    
+    .branding {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .header-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-lg);
+        width: 100%;
+    }
+    
+    .nav-list {
+        gap: var(--spacing-lg);
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    /* === ACCESSIBILITY ICONS === */
+    .accessibility-icons {
+        gap: var(--spacing-lg);
+    }
+    
+    .icon {
+        width: 3em;
+        height: 3em;
+        font-size: var(--font-size-base);
+    }
+    
+    /* === RESPONSIVE GRIDS === */
+    .grid-responsive {
+        gap: var(--spacing-lg);
+    }
+    
+    /* === IMAGE-TEXT CONTENT LAYOUT === */
+    /* Stack vertically; remove negative margins that can cause overflow */
+    .content-with-image {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        width: 100%;
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .content-with-image.reverse {
+        flex-direction: column; /* Override reverse direction at tablet/zoom */
+    }
+    
+    .content-text {
+        order: 1;
+        max-width: 100%;
+    }
+    
+    /* === SIDEBAR-MAIN LAYOUT === */
+    /* Stack sidebar and main content vertically */
+    .sidebar-main-layout {
+        flex-direction: column;
+        gap: var(--spacing-xl);
+        width: 100%;
+    }
+    /* Default: regular sidebars appear AFTER main content when stacked */
+    .sidebar-column {
+        width: 100%;
+        order: 2;
+        min-width: 0 !important; /* Override fixed min-width to prevent horizontal scroll */
+    }
+    
+    .main-column {
+        order: 1;
+        width: 100%;
+        min-width: 0 !important; /* Override fixed min-width to prevent horizontal scroll */
+    }
+
+    .main-column > * {
+        max-width: 100%;
+    }
+
+    /* EXCEPTION: Table of Contents sidebar appears BEFORE main content when stacked.
+       Do NOT move these rules into components/toc.css — the sibling selector
+       (#toc-sidebar ~ .main-column) must live in the same file as the sidebar-column
+       order rules above, or the TOC will render after the content instead of before. */
+    #toc-sidebar {
+        order: 1 !important;
+        width: 100%;
+    }
+    
+    #toc-sidebar ~ .main-column {
+        order: 2 !important;
+    }
+
+    /* === ABOUT PAGE — INTRO LAYOUT === */
+    .about-intro {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xl);
+    }
+
+    .profile-photo {
+        width: min(250px, 60vw); /* Zoom-safe sizing using min() */
+        height: min(250px, 60vw);
+        flex-shrink: 0;
+    }
+
+    .intro-greeting {
+        font-size: var(--font-size-xl);
+    }
+
+    .intro-description {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* ============================================================================
+   MOBILE SCREENS AND HIGH ZOOM LEVELS (max-width: 40em / 640px)
+   ============================================================================
+   Triggers when viewport is 640px or narrower, OR when zoomed to 200% on 
+   tablet screens. Further optimizations for smaller screens.
+============================================================================ */
+
+@media (max-width: 40em) {
+    
+    /* === CONTAINER PADDING === */
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    /* === HEADER ADJUSTMENTS === */
+    .header-content {
+        align-items: center;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .branding {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-list {
+        gap: var(--spacing-md);
+        justify-content: center;
+        flex-wrap: wrap;
+        /* Intentionally no flex-direction: column — keeps nav horizontal */
+    }
+
+    .header-nav {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .main-nav {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* === ENHANCED TOUCH TARGETS === */
+    /* WCAG 2.5.5 minimum touch target size */
+    .nav-link,
+    .theme-toggle {
+        padding: var(--spacing-md);
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* === SIDEBAR-MAIN LAYOUT === */
+    .sidebar-main-layout {
+        gap: var(--spacing-lg);
+    }
+    
+    .job-entry {
+        margin-bottom: var(--spacing-lg);
+        padding-bottom: var(--spacing-md);
+    }
+    
+    .content-section {
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    /* Reinforce TOC ordering from the tablet breakpoint */
+    #toc-sidebar {
+        order: 1 !important;
+        width: 100%;
+    }
+    
+    #toc-sidebar ~ .main-column {
+        order: 2 !important;
+    }
+
+    /* === ABOUT PAGE — INTRO LAYOUT === */
+    .mobile-left-align {
+        text-align: left !important;
+    }
+    
+    .about-intro {
+        align-items: center;
+    }
+
+    .profile-photo {
+        width: min(200px, 50vw);
+        height: min(200px, 50vw);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .initiatives-list li {
+        padding-left: var(--spacing-md);
+    }
+}
+
+/* ============================================================================
+   SMALL SCREENS (max-width: 576px)
+   ============================================================================
+   Additional adjustments for small devices such as iPhone SE.
+   Uses px rather than em since it targets specific hardware screen sizes
+   rather than zoom-level thresholds.
+============================================================================ */
+
+@media (max-width: 576px) {
+    .main-nav {
+        margin-bottom: 0;
+    }
+}
+
+/* ============================================================================
+   ULTRA-COMPACT LAYOUT (max-width: 20em / 320px)
+   ============================================================================
+   Triggers when viewport is 320px or narrower, OR when zoomed to 200% on 
+   640px mobile screens. Minimal spacing adjustments for extreme zoom.
+============================================================================ */
+
+@media (max-width: 20em) {
+    
+    /* === CONTAINER PADDING === */
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    /* === HEADER ADJUSTMENTS === */
+    .header-content {
+        gap: var(--spacing-xs);
+    }
+    
+    .nav-list {
+        gap: var(--spacing-sm);
+    }
+    
+    /* === PROFILE PHOTO === */
+    /* Reduce further for extreme zoom — override About page tablet sizing */
+    .profile-photo {
+        width: min(150px, 45vw) !important;
+        height: min(150px, 45vw) !important;
+    }
+    
+    /* === LIST SPACING === */
+    .initiatives-list li {
+        padding-left: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* ============================================================================
+   ACCESSIBILITY — USER PREFERENCE MEDIA QUERIES
+   ============================================================================
+   Styles that respond to OS-level accessibility settings. These are not
+   breakpoints but are grouped here as they modify layout and motion behavior.
+============================================================================ */
+
+/* === HIGH CONTRAST MODE === */
+@media (prefers-contrast: high) {
+    .nav-link:focus,
+    .theme-toggle:focus {
+        outline-width: 4px;
+    }
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* Remove hover transforms that can cause layout shifts at high zoom */
+    .case-study:hover,
+    .case-study-tile:hover,
+    .lightbox-button:hover {
+        transform: none !important;
+    }
+}

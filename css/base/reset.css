@@ -1,0 +1,104 @@
+/* =============================================================================
+   RESET.CSS - Browser Reset & Normalization
+   =============================================================================
+   Minimal reset that removes inconsistent browser defaults while preserving
+   useful defaults where appropriate.
+   ============================================================================= */
+
+/* Ensure box-sizing and margin reset are included */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Prevent font size inflation on mobile */
+html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+/* Smooth scrolling for the whole page */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    line-height: var(--line-height-relaxed);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Remove list styles on ul, ol elements with a list role */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+    min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+    scroll-margin-block: 5ex;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;a
+    }
+}
+
+/* Restore default margins for key elements to prevent excessive spacing */
+header,
+nav,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: revert;
+}
+
+/* Ensure consistent spacing for headers and navigation */
+header {
+    padding: var(--spacing-md) 0;
+}
+
+nav {
+    margin-bottom: var(--spacing-md);
+}

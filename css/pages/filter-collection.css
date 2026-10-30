@@ -1,0 +1,137 @@
+/* =============================================================================
+   FILTER-COLLECTION.CSS - Collection Filtering Interface
+   ============================================================================= */
+
+/* TABLE OF CONTENTS
+   =============================================================================
+   1. FILTER CONTAINERS
+      - Filters Container
+      - Search Filters
+      - Filter Row
+   2. CATEGORY FILTERS
+   3. RESULTS DISPLAY
+      - Results Header
+      - Results Count
+      - Collection Card Hidden State
+   4. RESPONSIVE ADJUSTMENTS
+   ============================================================================= */
+
+
+/* =============================================================================
+   1. FILTER CONTAINERS
+   ============================================================================= */
+
+/**
+ * Filters Container
+ * Main wrapper for all filtering controls
+ */
+.filters-container {
+    margin-top: var(--spacing-lg);
+}
+
+/**
+ * Search Filters
+ * Container for search and filter controls with visual styling
+ */
+.search-filters {
+    background: var(--color-background-primary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+/**
+ * Filter Row
+ * Flexbox layout for horizontal filter arrangement
+ */
+.filter-row {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+
+/* =============================================================================
+   2. CATEGORY FILTERS
+   ============================================================================= */
+
+/**
+ * Category Filters
+ * Button group for category filtering
+ */
+.category-filters {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-xl);
+    margin-top: var(--spacing-md);
+}
+
+
+/* =============================================================================
+   3. RESULTS DISPLAY
+   ============================================================================= */
+
+
+
+/**
+ * Results Count
+ * Display text for number of filtered results
+ */
+.results-count {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-sm);
+}
+
+/**
+ * Collection Card Hidden State
+ * Hides filtered-out items
+ */
+.collection-card.hidden {
+    display: none;
+}
+
+
+/* =============================================================================
+   4. RESPONSIVE ADJUSTMENTS
+   ============================================================================= */
+
+@media (max-width: 60em) {
+    .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        min-width: auto;
+    }
+    
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .category-filters {
+        gap: var(--spacing-xs);
+    }
+}
+
+@media (max-width: 40em) {
+    .category-filters {
+        gap: var(--spacing-xs);
+    }
+    
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+    }
+    
+    .filter-label {
+        white-space: normal;
+    }
+}

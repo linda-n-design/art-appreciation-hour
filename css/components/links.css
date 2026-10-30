@@ -1,0 +1,380 @@
+/* ============================================================
+   LINK STYLES
+   ============================================================ */
+
+/* ============================================================
+   TABLE OF CONTENTS
+   ============================================================
+   1. Regular Link Styles
+   2. Inline Link Styles
+   3. Skip Link Styles
+   4. With Trailing Icon
+   5. Button-like Links
+   6. Site Title Link Styles
+   7. Icon-Only Link Variant
+   8. Text Link Variant
+   ============================================================ */
+
+/* ============================================================
+   1. Regular Link Styles
+   ============================================================ */
+
+/* Default Link Styles */
+a {
+    color: var(--color-link-primary);
+    text-decoration: underline;
+    transition: color var(--transition-duration-fast) var(--transition-timing);
+    padding: var(--spacing-xs) var(--spacing-sm); /* Pre-apply padding */
+    margin: calc(-1 * var(--spacing-xs)) calc(-1 * var(--spacing-sm)); /* Pre-apply negative margin */
+    border-radius: 0; /* Default state: no border radius */
+    display: inline;
+}
+
+/* Hover and Focus - EXCLUDE TOC links and icon-only links */
+a:hover:not(.toc-link):not(.link--icon-only) {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background); /* Add light blue background */
+    border-radius: var(--radius-lg); /* Use --radius-lg for rounded background */
+    transition: background-color var(--transition-duration-fast) var(--transition-timing), color var(--transition-duration-fast) var(--transition-timing); /* Unified timing */
+}
+
+a:focus:not(.toc-link):not(.link--icon-only) {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background); /* Add light blue background */
+    border-radius: var(--radius-lg); /* Use --radius-lg for rounded background */
+    transition: background-color var(--transition-duration-fast) var(--transition-timing), color var(--transition-duration-fast) var(--transition-timing); /* Unified timing */
+    outline: var(--border-width-thick) solid var(--color-interactive-focus); /* Focus indicator */
+    outline-offset: var(--spacing-xs); /* Offset for focus indicator */
+}
+
+/* ============================================================
+   2. Inline Link Styles
+   ============================================================ */
+
+a.inline-link {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline;
+    text-decoration: underline;
+}
+
+a.inline-link:hover {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    text-decoration: underline;
+    border-radius: var(--radius-lg);
+    padding: 0 !important; /* Ensure no padding on hover either */
+}
+a.inline-link:focus {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    text-decoration: underline;
+    border-radius: var(--radius-lg);
+    outline: var(--border-width-thick) solid var(--color-interactive-focus); /* Focus indicator */
+    outline-offset: var(--spacing-xs); /* Offset for focus indicator */
+}
+
+/* ============================================================
+   3. Skip Link Styles
+   ============================================================ */
+
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+    background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+}
+
+/* ============================================================
+   4. With Trailing Icon
+   ============================================================ */
+
+a.trailing-icon {
+    padding: 0; /* Remove padding to match inline-link variant */
+    margin: 0; /* Ensure no margin is applied */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    text-decoration: underline;
+}
+
+a.trailing-icon:hover {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    text-decoration: underline;
+    border-radius: var(--radius-lg);
+}
+
+a.trailing-icon:focus {
+    color: var(--color-link-hover-text);
+    background-color: var(--color-link-hover-background);
+    text-decoration: underline;
+    border-radius: var(--radius-lg);
+    outline: var(--border-width-thick) solid var(--color-interactive-focus); /* Focus indicator */
+    outline-offset: var(--spacing-xs); /* Offset for focus indicator */
+}
+
+/* External Link Icons */
+.external-link-icon {
+    width: .8em;
+    height: .8em;
+    margin-left: 6px;
+    vertical-align: middle;
+    transition: filter var(--transition-fast);
+    flex-shrink: 0;
+}
+
+/* Theme-aware filters for external link icons */
+[data-theme="light"] .external-link-icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+}
+
+[data-theme="dark"] .external-link-icon {
+    filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+}
+
+@media (prefers-color-scheme: light) {
+    .external-link-icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .external-link-icon {
+        filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+    }
+}
+
+/* ============================================================
+   5. Button-like Links
+   ============================================================ */
+
+a.button-link {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-interactive-primary);
+    color: var(--color-text-on-interactive);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+a.button-link:hover {
+    background-color: var(--color-interactive-hover);
+}
+
+a.button-link:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+}
+
+a.button-link:active {
+    transform: scale(0.95);
+}
+
+/* Button-like Link (outlined variant) */
+a.button-like-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: none;
+    border: 1px solid var(--color-border-primary);
+    color: var(--color-text-primary);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+a.button-like-link:hover {
+    background-color: var(--color-link-hover-background);
+    border-color: var(--color-interactive-primary);
+}
+
+a.button-like-link:focus {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    background-color: var(--color-link-hover-background);
+}
+
+/* Button-like link icons */
+a.button-like-link img {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    transition: filter var(--transition-fast);
+}
+
+/* Light theme - button-like link icons */
+[data-theme="light"] a.button-like-link img {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+}
+
+/* Dark theme - button-like link icons */
+[data-theme="dark"] a.button-like-link img {
+    filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+}
+
+/* System preference fallbacks */
+@media (prefers-color-scheme: light) {
+    a.button-like-link img {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(8%) saturate(1264%) hue-rotate(202deg) brightness(95%) contrast(91%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    a.button-like-link img {
+        filter: brightness(0) saturate(100%) invert(98%) sepia(8%) saturate(220%) hue-rotate(180deg) brightness(95%) contrast(91%);
+    }
+}
+
+/* ============================================================
+   6. Site Title Link Styles
+   This is the link in the header that links to the homepage.
+   ============================================================ */
+
+.site-title-link {
+    text-decoration: none; /* Override underline */
+    color: inherit; /* Inherit color from parent */
+    border-radius: var(--radius-lg); /* Specific to site title links */
+    display: inline-block;
+    transition: none; /* No hover transition */
+    word-wrap: break-word; /* Specific to high zoom handling */
+}
+
+.site-title-link:hover {
+    background-color: transparent; /* Override hover background */
+    color: inherit; /* Override hover text color */
+}
+
+.site-title-link:focus {
+    outline: 3px solid var(--color-interactive-focus); /* Accessibility focus indicator */
+    outline-offset: var(--spacing-xs);
+    border-radius: var(--radius-sm); /* Specific to site title links */
+}
+
+/* ============================================================
+   7. Icon-Only Link Variant
+   ============================================================ */
+
+/* Icon-only link - circular button-like appearance for navigation icons */
+/* Use for back buttons, close buttons, and other icon-only navigation */
+/* Matches dialog.css close/back button styling */
+.link--icon-only {
+    /* Match dialog button dimensions */
+    width: 48px;
+    height: 48px;
+    padding: 0 !important; /* Override default link padding */
+    margin: 0 !important; /* Override default link negative margin */
+    
+    /* Button reset */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    
+    /* CRITICAL: box-sizing ensures border stays inside dimensions for perfect circle */
+    box-sizing: border-box !important;
+    
+    /* Circular button styling */
+    border-radius: var(--radius-full);
+    
+    /* Match dialog button transitions */
+    transition: all 0.3s ease-in-out;
+    
+    /* Flexbox for icon centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Reset link styles */
+    text-decoration: none;
+    
+    /* Prevent button from shrinking */
+    flex-shrink: 0;
+}
+
+/* Hover state - border and background appear */
+.link--icon-only:hover {
+    background-color: var(--color-link-hover-background);
+    border: 2px solid var(--color-interactive-primary);
+}
+
+/* Focus state - only show visual ring for keyboard users (focus-visible) */
+a.link--icon-only:focus-visible {
+    outline: 3px solid var(--color-interactive-focus);
+    outline-offset: var(--spacing-xs);
+    background-color: var(--color-link-hover-background);
+    border: 2px solid var(--color-interactive-primary);
+}
+
+/* Active state */
+.link--icon-only:active {
+    transform: translateY(0);
+}
+
+/* Icon styling inside icon-only link */
+.link--icon-only img {
+    display: block;
+    width: 18px;
+    height: 18px;
+}
+
+/* Dark mode - invert icon for better visibility */
+[data-theme="dark"] .link--icon-only img {
+    filter: invert(1);
+}
+
+/* ============================================================
+   8. Text Link Variant
+   ============================================================ */
+
+/* Text link - looks like an underlined link, with disabled state */
+/* Use for links that should look like plain text links without button styling */
+.link--text-link {
+    background: none;
+    border: none;
+    color: var(--color-link-primary);
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+    display: inline;
+    transition: all var(--transition-fast);
+}
+
+.link--text-link:hover {
+    color: var(--color-link-hover-text);
+    text-decoration: underline;
+}
+
+.link--text-link:focus {
+    outline: 2px solid var(--color-interactive-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+    text-decoration: underline;
+    color: var(--color-link-hover-text);
+}
+
+.link--text-link:disabled {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+}

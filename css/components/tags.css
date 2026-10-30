@@ -1,0 +1,28 @@
+/* Provides spacing above and below the set of tags */
+.collection-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Tag components */
+.tag {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    background: var(--color-background-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 1em;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    width: fit-content;
+    min-height: 32px;
+    box-sizing: border-box;
+}
+
+.collection-category.icon-only {
+    padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) var(--spacing-sm);
+}

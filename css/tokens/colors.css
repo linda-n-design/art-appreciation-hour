@@ -1,0 +1,288 @@
+/* =============================================================================
+   COLORS.CSS - Color Design Tokens
+   =============================================================================
+   This file contains all color tokens for the design system.
+   
+   Structure:
+   1. Light Mode Colors (default)
+   2. Dark Mode Colors (via [data-theme="dark"])
+   3. Light Mode Override (via [data-theme="light"])
+   4. Gradient Colors
+   5. Applied Styles (body backgrounds)
+   
+   Note: We use [data-theme] attribute instead of @media (prefers-color-scheme)
+   to allow JavaScript-controlled theme switching. The theme-toggle.js script
+   detects system preference on load and sets the attribute.
+   ============================================================================= */
+
+:root {
+    /* =========================================================================
+       LIGHT MODE COLORS (DEFAULT)
+       ========================================================================= */
+    
+    /* --- Brand Colors --- */
+    --color-brand-primary: #0070C0;    /* H1, H2, site title, bullets, active nav */
+    --color-brand-primary-hover: #2F5496;  /* Hover state for primary brand interactions */
+    --color-brand-secondary: #2F5496;  /* H3+, subtitle */
+
+    /* --- Text Colors --- */
+    --color-text-primary: #313131;     /* Main body text */
+    --color-text-muted: #666666;       /* Captions, secondary text */
+    
+    /* --- Semantic Text Assignments --- */
+    --color-text-heading-primary: var(--color-brand-primary);      /* H1, H2, site title */
+    --color-text-heading-secondary: var(--color-brand-secondary);  /* H3+, subtitle */
+    
+    /* --- Link Colors --- */
+    --color-link-primary: #612500;
+    --color-link-hover-text: #4A3917;
+    --color-link-hover-background: #E6F3FF;
+
+    /* --- Border Colors --- */
+    --color-border-primary: #808080;   /* Main borders */
+    --color-border-muted: #D4D4C5;     /* Subtle dividers */
+
+    /* --- Interactive Colors --- */
+    --color-interactive-focus: var(--color-brand-primary);
+    --color-bullet: var(--color-brand-primary);
+    --color-nav-active: var(--color-brand-primary);
+
+    /* --- CTA Button Colors (Light Mode) --- */
+    --color-cta-background: var(--color-brand-primary);
+    --color-cta-text: #FFFFFF;
+    --color-cta-hover-background: var(--color-brand-primary-hover);
+    --color-cta-hover-text: #FFFFFF;
+
+    /* --- Background Colors --- */
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f8f9fa;
+    --color-background-body-start: #FFFFFF;
+    --color-background-body-end: #FBFBF9;
+
+    /* --- Data Table Colors --- */
+    --color-table-row-hover: #E6F3FF;  /* Light blue background on row hover */
+
+    /* --- Status Colors --- */
+    --color-error-primary: #D32F2F;    /* Error text and borders */
+
+    /* --- Icon Colors --- */
+    --color-icon-primary: #01243E;     /* UI icons like carets, spinners */
+
+    /* --- Theme-Independent Colors --- */
+    /* These colors stay constant across both light and dark themes */
+    --color-tile-background: #0070C0;  /* Always blue - case study tile backgrounds */
+    --color-code-background: #1a1a1a;  /* Always dark gray - code/example blocks, regardless of theme */
+    --color-code-text: #F3F3F3;        /* Always light - paired with --color-code-background for guaranteed contrast */
+
+    /* --- Lightbox Colors (Light Mode) --- */
+    --lightbox-backdrop: rgba(0, 0, 0, 0.9);
+    --lightbox-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    --lightbox-caption-background: rgba(0, 0, 0, 0.8);
+    --lightbox-caption-color: #ffffff;
+    --lightbox-close-background: rgba(255, 255, 255, 0.1);
+    --lightbox-close-hover-background: rgba(255, 255, 255, 0.2);
+    --lightbox-close-color: #ffffff;
+    --lightbox-close-border-color: #ffffff;
+    --lightbox-image-background: #ffffff;
+    --lightbox-image-border-color: var(--color-brand-primary);
+    --lightbox-nav-background: #022C4B;
+    --lightbox-nav-hover-background: #1A2332;
+
+    /* --- Colors for Comments --- */
+    --color-comment: #dc5b97; /* Used for code comments */
+}
+
+/* =============================================================================
+   DARK MODE COLORS
+   ============================================================================= */
+
+[data-theme="dark"] {
+    /* --- Brand Colors --- */
+    --color-brand-primary: #43C3FF;    /* H1, H2, site title, bullets, active nav */
+    --color-brand-primary-hover: #00A0EB;  /* Hover state for primary brand interactions */
+    --color-brand-secondary: #00A0EB;  /* H3+, subtitle */
+
+    /* --- Text Colors --- */
+    --color-text-primary: #FFFFFF;     /* Main body text */
+    --color-text-muted: #96A6B2;       /* Captions, secondary text */
+    
+    /* --- Semantic Text Assignments --- */
+    --color-text-heading-primary: var(--color-brand-primary);      /* H1, H2, site title */
+    --color-text-heading-secondary: var(--color-brand-secondary);  /* H3+, subtitle */
+    
+    /* --- Link Colors --- */
+    --color-link-primary: #D38DB3;
+    --color-link-hover-text: #74DDE2;
+    --color-link-hover-background: #1A2332;
+
+    /* --- Border Colors --- */
+    --color-border-primary: #949494;   /* Main borders - DO NOT CHANGE */
+    --color-border-muted: #03406D;     /* Subtle dividers */
+
+    /* --- Interactive Colors --- */
+    --color-interactive-focus: var(--color-brand-primary);
+    --color-bullet: var(--color-brand-primary);
+    --color-nav-active: var(--color-brand-primary);
+
+    /* --- CTA Button Colors (Dark Mode) --- */
+    --color-cta-background: #DA71AA;
+    --color-cta-text: var(--color-link-hover-background);
+    --color-cta-hover-background: var(--color-link-hover-text);
+    --color-cta-hover-text: var(--color-link-hover-background);
+
+    /* --- Background Colors --- */
+    --color-background-primary: #022C4B;
+    --color-background-secondary: #1a1a1a;
+    --color-background-body-start: #022C4B;
+    --color-background-body-end: #002038;
+
+    /* --- Data Table Colors --- */
+    --color-table-row-hover: #005594;  /* Dark blue background on row hover */
+
+    /* --- Status Colors --- */
+    --color-error-primary: #DC5B97;    /* Error text and borders */
+
+    /* --- Icon Colors --- */
+    --color-icon-primary: #F3F3F3;     /* UI icons like carets, spinners */
+
+    /* --- Lightbox Colors (Dark Mode) --- */
+    --lightbox-backdrop: rgba(2, 44, 75, 0.95);
+    --lightbox-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    --lightbox-caption-background: rgba(2, 44, 75, 0.9);
+    --lightbox-caption-color: #D0CF94;
+    --lightbox-close-background: rgba(208, 207, 148, 0.1);
+    --lightbox-close-hover-background: rgba(208, 207, 148, 0.2);
+    --lightbox-close-color: #D0CF94;
+    --lightbox-close-border-color: #D0CF94;
+    --lightbox-image-background: #ffffff;
+    --lightbox-image-border-color: var(--color-brand-primary);
+    --lightbox-nav-background: #022C4B;
+    --lightbox-nav-hover-background: #1A2332;
+}
+
+/* =============================================================================
+   LIGHT MODE EXPLICIT OVERRIDE
+   ============================================================================= */
+   
+[data-theme="light"] {
+    /* --- Brand Colors --- */
+    --color-brand-primary: #0070C0;
+    --color-brand-primary-hover: #2F5496;
+    --color-brand-secondary: #2F5496;
+
+    /* --- Text Colors --- */
+    --color-text-primary: #313131;
+    --color-text-muted: #666666;
+    
+    /* --- Semantic Text Assignments --- */
+    --color-text-heading-primary: var(--color-brand-primary);
+    --color-text-heading-secondary: var(--color-brand-secondary);
+    
+    /* --- Link Colors --- */
+    --color-link-primary: #612500;
+    --color-link-hover-text: #4A3917;
+    --color-link-hover-background: #E6F3FF;
+
+    /* --- Border Colors --- */
+    --color-border-primary: #808080;
+    --color-border-muted: #D4D4C5;
+
+    /* --- Interactive Colors --- */
+    --color-interactive-focus: var(--color-brand-primary);
+
+    /* --- CTA Button Colors (Light Mode) --- */
+    --color-cta-background: var(--color-brand-primary);
+    --color-cta-text: #FFFFFF;
+    --color-cta-hover-background: var(--color-brand-primary-hover);
+    --color-cta-hover-text: #FFFFFF;
+
+    /* --- Background Colors --- */
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f8f9fa;
+    --color-background-body-start: #FFFFFF;
+    --color-background-body-end: #FBFBF9;
+
+    /* --- Data Table Colors --- */
+    --color-table-row-hover: #E6F3FF;
+
+    /* --- Status Colors --- */
+    --color-error-primary: #D32F2F;
+
+    /* --- Icon Colors --- */
+    --color-icon-primary: #01243E;
+
+    /* --- Lightbox Colors (Light Mode) --- */
+    --lightbox-backdrop: rgba(0, 0, 0, 0.9);
+    --lightbox-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    --lightbox-caption-background: rgba(0, 0, 0, 0.8);
+    --lightbox-close-background: rgba(255, 255, 255, 0.1);
+    --lightbox-close-hover-background: rgba(255, 255, 255, 0.2);
+    --lightbox-close-color: #ffffff;
+    --lightbox-close-border-color: #ffffff;
+}
+
+/* =============================================================================
+   GRADIENT COLORS
+   Used for hero sections and branded backgrounds
+   ============================================================================= */
+
+:root {
+    /* Hero Gradients */
+    --gradient-hero-primary-start: #336990;
+    --gradient-hero-primary-end: #002845;
+    --gradient-accessible-ux-start: #0070C0;
+    --gradient-accessible-ux-end: #0E2945;
+    
+    /* Brand Backgrounds */
+    --background-chase-start: #015EB8;
+    --background-chase-end: #041E42;
+    --background-quickbooks: #0D333F;
+}
+
+/* =============================================================================
+   SYSTEM PREFERENCE FALLBACK
+   Apply dark theme colors when no manual theme is set
+   ============================================================================= */
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --color-brand-primary: #D0CF94;
+        --color-brand-secondary: #E0DFB8;
+        --color-text-primary: hsl(220, 14%, 85%);
+        --color-text-muted: hsl(220, 12%, 65%);
+        --color-text-heading-primary: #D0CF94;
+        --color-text-heading-secondary: #E0DFB8;
+        --color-link-primary: #A5CECF;
+        --color-link-hover-text: #74DDE2;
+        --color-link-hover-background: #1A2332;
+        --color-border-primary: #333333;
+        --color-interactive-focus: #D0CF94;
+    }
+}
+
+/* =============================================================================
+   APPLIED STYLES - Body Backgrounds
+   
+   These apply the color tokens to actual elements.
+   Note: Layout properties (min-height, etc.) belong in layout files.
+   ============================================================================= */
+
+/* Default body background - Light mode gradient */
+body {
+    background: linear-gradient(to bottom, var(--color-background-body-start), var(--color-background-body-end));
+    background-attachment: fixed;
+    color: var(--color-text-primary);
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+/* Dark mode body background */
+[data-theme="dark"] body {
+    background: linear-gradient(to bottom, var(--color-background-body-start), var(--color-background-body-end));
+    background-attachment: fixed;
+}
+
+/* Light mode body background (explicit override) */
+[data-theme="light"] body {
+    background: linear-gradient(to bottom, var(--color-background-body-start), var(--color-background-body-end));
+    background-attachment: fixed;
+}
