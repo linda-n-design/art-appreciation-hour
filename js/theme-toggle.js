@@ -1,3 +1,10 @@
+// Site root, worked out from this script's own URL (js/theme-toggle.js sits one
+// folder below the root). Icon paths built from it work on GitHub Pages
+// (/art-appreciation-hour/), on a local server, and from pages in subfolders.
+const SITE_ROOT = document.currentScript
+    ? document.currentScript.src.replace(/js\/theme-toggle\.js(\?.*)?$/, '')
+    : '';
+
 // Theme management
 class ThemeManager {
     constructor() {
@@ -52,13 +59,13 @@ class ThemeManager {
         if (!this.themeToggle) return;
         
         if (this.theme === 'dark') {
-            // Use absolute path from root so it works from any directory level
-            this.themeIcon.src = '/images/icon-sun-solid-full.svg';
+            // Built from the site root so it works on GitHub Pages and in subfolders
+            this.themeIcon.src = SITE_ROOT + 'images/icon-sun-solid-full.svg';
             this.themeText.textContent = 'Light';
             this.themeToggle.setAttribute('aria-label', 'Switch to light mode');
         } else {
-            // Use absolute path from root so it works from any directory level
-            this.themeIcon.src = '/images/icon-moon-solid-full.svg';
+            // Built from the site root so it works on GitHub Pages and in subfolders
+            this.themeIcon.src = SITE_ROOT + 'images/icon-moon-solid-full.svg';
             this.themeText.textContent = 'Dark';
             this.themeToggle.setAttribute('aria-label', 'Switch to dark mode');
         }
