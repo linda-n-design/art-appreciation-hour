@@ -1,0 +1,52 @@
+/* =============================================================================
+   HEADER-LOGO.CSS - Logo in the Microsite Header
+   =============================================================================
+
+   Puts the logo at the left of the header, in the same row as the theme toggle,
+   150px wide, and shows the light or dark version to match the theme. The toggle
+   stays in the same spot as on the home page, whatever height the logo is.
+
+   Load this after microsite.css. The toggle stays at the right edge because the
+   logo takes the free space (margin-right: auto), so the gap between the logo
+   and the left edge matches the gap between the toggle and the right edge.
+
+   HTML:
+     <a class="microsite-header__logo" href="index.html">
+       <img src="images/art-appreciation-hour-light.png" alt="Art Appreciation Hour" class="logo--light">
+       <img src="images/art-appreciation-hour.png" alt="Art Appreciation Hour" class="logo--dark">
+     </a>
+============================================================================= */
+
+/* Up to 150px wide, and it shrinks on narrow screens so it never covers the toggle */
+.microsite-header__logo {
+    flex: 0 1 150px;
+    min-width: 0;
+    margin-right: auto;
+    margin-top: 2px; /* Same 2px offset the toggle has, so the two line up */
+}
+
+.microsite-header__logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Light logo by default, dark logo in dark mode */
+.microsite-header__logo .logo--dark {
+    display: none;
+}
+
+[data-theme="dark"] .microsite-header__logo .logo--light {
+    display: none;
+}
+
+[data-theme="dark"] .microsite-header__logo .logo--dark {
+    display: block;
+}
+
+/* The toggle stays at the top of the header, where it sits on the home page.
+   Without this, a logo taller than the toggle would push the toggle down to
+   center it in the taller row. A shorter logo is still centered beside it. */
+.microsite-header__actions {
+    align-self: flex-start;
+}

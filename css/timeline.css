@@ -1,0 +1,319 @@
+/* =============================================================================
+   TIMELINE.CSS - Horizontal Timeline Component
+   =============================================================================
+
+   A lifespan timeline built from plain HTML, so the content is real text that
+   screen readers read in order and that scales with the user's text size. The
+   scale and marker are decoration for sighted users and are hidden from
+   assistive technology (aria-hidden="true" in the HTML). The bars hold the
+   dates as real text, so they are not hidden.
+
+   TABLE OF CONTENTS
+   1. Timeline Container and Scale Variables
+   2. Year Scales (top and bottom)
+   3. Chart Body (gridlines and shaded period)
+   4. Rows (label, track, and bar)
+   5. Marker (a single event on a lifespan)
+   6. Key
+   7. Responsive Behavior
+   8. Forced Colors (Windows High Contrast)
+
+   HOW TO REUSE IT
+   This file holds no data. Everything that makes one timeline different from
+   another is written in the HTML, so one stylesheet serves any number of
+   timelines. Positions are percentages calculated from numbers (years, here).
+
+   1. Set the range and the gridline spacing on the .timeline element. The CSS
+      has fallback values, but a different timeline needs its own:
+
+        <div class="timeline" style="--timeline-start: 1890; --timeline-end: 1960; --timeline-step: 10">
+
+      The span must divide evenly by the step (here, 70 / 10 = 7 gridlines).
+
+   2. Give each tick, row, and marker its numbers as custom properties:
+
+        style="--year: 1956"                   a tick or marker at 1956
+        style="--start: 1908; --end: 1963"     a row (the <li>) from 1908 to 1963
+
+      The row's label and bar both read --start and --end from the row, so
+      the name lines up with the start of the bar.
+
+      Numbers outside the range are clipped to the edge of the chart.
+
+   3. Add modifier classes as needed:
+
+        timeline__bar--continues    bar runs past the end of the scale (adds an arrow)
+        timeline__tick--highlight   bold year label
+        timeline__tick--hide-narrow / --hide-narrower
+                                    hide a year label on narrow screens or at
+                                    large text sizes, so labels never overlap
+        timeline__bar--featured     bar in the call-to-action color, to set one row apart
+        timeline__marker-note--after
+                                    caption starts at the marker instead of ending at it
+
+      A shaded period behind all rows (for example, a movement) is one more
+      element inside .timeline__body, before the list:
+
+        <span class="timeline__band" style="--start: 1920; --end: 1960" aria-hidden="true"></span>
+
+   4. Optional: color one bar differently with
+        style="--timeline-bar-color: ..."   (on the bar)
+
+   The scale and marker are aria-hidden in the HTML. The bar text and the row
+   labels are real text, so they are the accessible content.
+
+   Dependencies:
+   - colors.css, spacing.css, typography.css (design tokens)
+============================================================================= */
+
+/* ========================================
+   1. Timeline Container and Scale Variables
+   ======================================== */
+
+.timeline {
+    /* Fallback range, so a timeline never collapses if the HTML leaves these out.
+       Always set the real values in the HTML (see HOW TO REUSE IT). */
+    --timeline-start: 1890;
+    --timeline-end: 1960;
+    --timeline-step: 10;
+
+    /* Calculated from the three values above */
+    --timeline-span: calc(var(--timeline-end) - var(--timeline-start));
+    --timeline-intervals: calc(var(--timeline-span) / var(--timeline-step));
+
+    /* Space around the text inside each bar */
+    --timeline-bar-padding: var(--spacing-sm);
+
+    /* Room at each side so the first and last year labels are not cut off,
+       and so the "continues" arrow has space beyond the right edge */
+    padding-inline: 1.75em;
+    margin: var(--spacing-lg) 0;
+
+    /* Lets the responsive rules below react to the chart's own width. Measured
+       in em, so they also react when people enlarge their text. */
+    container-type: inline-size;
+    container-name: timeline;
+}
+
+/* ========================================
+   2. Year Scales (top and bottom)
+   ======================================== */
+
+.timeline__scale {
+    position: relative;
+    height: 2em;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.timeline__scale--top {
+    border-bottom: 1px solid var(--color-border-muted);
+}
+
+.timeline__scale--bottom {
+    border-top: 1px solid var(--color-border-muted);
+}
+
+/* Each label is centered on its year */
+.timeline__tick {
+    position: absolute;
+    top: 50%;
+    left: calc((var(--year) - var(--timeline-start)) / var(--timeline-span) * 100%);
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+/* Years to emphasize, such as the decades of a movement: bold, in the primary
+   text color instead of the muted color the other years use */
+.timeline__tick--highlight {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+/* ========================================
+   3. Chart Body (gridlines and shaded period)
+   ======================================== */
+
+.timeline__body {
+    position: relative;
+    border-right: 1px solid var(--color-border-muted);
+}
+
+/* Shaded period behind all rows (for example, the years of a movement) */
+.timeline__band {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc((var(--start) - var(--timeline-start)) / var(--timeline-span) * 100%);
+    width: calc((var(--end) - var(--start)) / var(--timeline-span) * 100%);
+    background-color: var(--color-background-secondary);
+}
+
+/* The list sits above the band. The gridlines are drawn on it, one per step
+   across the range, so they show over the shading. */
+.timeline__list {
+    position: relative;
+    padding-block: var(--spacing-lg); /* Space between each scale and the nearest row */
+    background-image: linear-gradient(to right, var(--color-border-muted) 1px, transparent 1px);
+    background-size: calc(100% / var(--timeline-intervals)) 100%;
+    background-repeat: repeat-x;
+}
+
+/* ========================================
+   4. Rows (label, track, and bar)
+   ======================================== */
+
+/* Space between one artist's row and the next */
+.timeline__item + .timeline__item {
+    margin-top: var(--spacing-xl);
+}
+
+.timeline__label {
+    --from: max(var(--start), var(--timeline-start));
+
+    margin-left: calc((var(--from) - var(--timeline-start)) / var(--timeline-span) * 100%);
+    margin-bottom: 0.25em;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text-primary);
+}
+
+/* The track is the full-width lane a bar sits in */
+.timeline__track {
+    position: relative;
+}
+
+.timeline__bar {
+    /* Clip to the visible range */
+    --from: max(var(--start), var(--timeline-start));
+    --to: min(var(--end), var(--timeline-end));
+    --timeline-bar-color: var(--color-text-heading-secondary);
+
+    display: block;
+    position: relative;
+    box-sizing: border-box; /* So the percentage width includes the padding */
+    margin-left: calc((var(--from) - var(--timeline-start)) / var(--timeline-span) * 100%);
+    width: calc((var(--to) - var(--from)) / var(--timeline-span) * 100%);
+    padding: var(--timeline-bar-padding);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    /* Text uses the page background color so it reads against the bar in both themes */
+    color: var(--color-background-primary);
+    background-color: var(--timeline-bar-color);
+    border: 1px solid var(--timeline-bar-color);
+    border-radius: var(--radius-sm);
+}
+
+/* The featured bar (for example, the artist the page is about) uses the call-to-action color */
+.timeline__bar--featured {
+    --timeline-bar-color: var(--color-cta-background);
+}
+
+/* Lifespan continues past the end of the scale: flat end plus a full-height arrow */
+.timeline__bar--continues {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.timeline__bar--continues::after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    bottom: -1px;
+    left: 100%;
+    width: 1em;
+    background-color: var(--timeline-bar-color);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* ========================================
+   5. Marker (a single event on a lifespan)
+   ======================================== */
+
+/* A diamond centered on its year, straddling the bottom edge of the bar */
+.timeline__marker {
+    position: absolute;
+    bottom: 0; /* The bottom edge of the bar */
+    left: calc((var(--year) - var(--timeline-start)) / var(--timeline-span) * 100%);
+    width: 1.1em;
+    height: 1.1em;
+    background-color: var(--color-text-primary);
+    border: 2px solid var(--color-background-primary);
+    box-shadow: 0 0 0 1px var(--color-text-primary);
+    transform: translate(-50%, 50%) rotate(45deg);
+}
+
+/* Caption sits under the track, right-aligned so it ends at the marker */
+.timeline__marker-note {
+    padding-top: 0.9em; /* Room for the point of the diamond */
+    padding-right: calc((var(--timeline-end) - var(--year)) / var(--timeline-span) * 100%);
+    text-align: right;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-base);
+    color: var(--color-text-primary);
+}
+
+/* For a marker near the start of the range: caption starts at the marker */
+.timeline__marker-note--after {
+    padding-right: 0;
+    padding-left: calc((var(--year) - var(--timeline-start)) / var(--timeline-span) * 100%);
+    text-align: left;
+}
+
+/* ========================================
+   6. Key
+   ======================================== */
+
+.timeline__key {
+    margin-top: var(--spacing-sm);
+}
+
+/* ========================================
+   7. Responsive Behavior
+   ======================================== */
+
+/* These react to the width of the chart itself, in em. Labels would collide
+   below about 21em, because each year label needs about 3em of room. */
+
+/* Narrow chart or enlarged text: hide the least important year labels first */
+@container timeline (max-width: 30em) {
+    .timeline__tick--hide-narrow {
+        display: none;
+    }
+}
+
+/* Very narrow chart or very large text: hide the next level of year labels too */
+@container timeline (max-width: 22em) {
+    .timeline__tick--hide-narrower {
+        display: none;
+    }
+}
+
+/* Slightly less side room on small screens */
+@media (max-width: 28em) {
+    .timeline {
+        padding-inline: 1.25em;
+    }
+}
+
+/* ========================================
+   8. Forced Colors (Windows High Contrast)
+   ======================================== */
+
+@media (forced-colors: active) {
+    .timeline__bar,
+    .timeline__marker {
+        forced-color-adjust: none;
+    }
+
+    .timeline__bar {
+        --timeline-bar-color: CanvasText;
+        color: Canvas;
+    }
+
+    .timeline__marker {
+        background-color: Highlight;
+        border-color: Canvas;
+        box-shadow: 0 0 0 1px CanvasText;
+    }
+}

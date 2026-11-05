@@ -14,6 +14,7 @@
    2. Title Section (centered h1 and tagline)
    3. Prose Width Constraint
    4. Inaugural Event Spacing
+   5. Page Title and Section Separator Spacing
 
 ============================================================================= */
 
@@ -88,35 +89,7 @@
     margin-left: auto;
     margin-right: auto;
 }
-/* Move the title block (logo and tagline) up */
-.microsite-header ~ .main-content .container--full-width:first-child {
-    margin-top: calc(var(--spacing-md) * -2);
-}
 
-/* Logo: size and center */
-/* Logo: size and center (both versions) */
-.microsite-header ~ .main-content .container--full-width:first-child h1 img {
-    display: block;
-    width: 5em;
-    max-width: 100%;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Light mode (and no-JavaScript default): show the light logo, hide the dark one */
-.microsite-header ~ .main-content .container--full-width:first-child h1 .logo--dark {
-    display: none;
-}
-
-/* Dark mode: swap them */
-[data-theme="dark"] .microsite-header ~ .main-content .container--full-width:first-child h1 .logo--light {
-    display: none;
-}
-
-[data-theme="dark"] .microsite-header ~ .main-content .container--full-width:first-child h1 .logo--dark {
-    display: block;
-}
 /* ========================================
    3. Prose Width Constraint
    ======================================== */
@@ -141,4 +114,42 @@
 /* Space between the list of times and the "Let's chat about..." paragraph */
 .event-focus {
     margin-top: var(--spacing-3xl);
+}
+
+/* ========================================
+   5. Page Title and Section Separator Spacing
+   ======================================== */
+
+/* Space below a page title that sits in a regular container (not the home page
+   title block). Set on the section after the title, not on the title itself:
+   the spacing tokens are in em, so on a 3em heading they would come out three
+   times larger than everywhere else. */
+.main-content .container > .display + section {
+    margin-top: var(--spacing-3xl);
+}
+
+/* Space above and below the muted separator between sections */
+.main-content .visual-separator-muted {
+    margin-top: var(--spacing-3xl);
+    margin-bottom: var(--spacing-3xl);
+}
+/* Logo: one version per theme, centered */
+.display img {
+    display: block;
+    width: 5em;
+    max-width: 100%;
+    height: auto;
+    margin-inline: auto;
+}
+
+.display .logo--dark {
+    display: none;
+}
+
+[data-theme="dark"] .display .logo--light {
+    display: none;
+}
+
+[data-theme="dark"] .display .logo--dark {
+    display: block;
 }
