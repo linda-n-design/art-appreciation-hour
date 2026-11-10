@@ -15,6 +15,10 @@
    3. Prose Width Constraint
    4. Inaugural Event Spacing
    5. Page Title and Section Separator Spacing
+   6. Space Between Sections
+   7. Subheading Color
+   8. Heading Icons
+   9. Links with a Trailing Icon
 
 ============================================================================= */
 
@@ -121,10 +125,10 @@
    ======================================== */
 
 /* Space below a page title that sits in a regular container (not the home page
-   title block). Set on the section after the title, not on the title itself:
-   the spacing tokens are in em, so on a 3em heading they would come out three
-   times larger than everywhere else. */
-.main-content .container > .display + section {
+   title block). Set on whatever follows the title (a section, or the sidebar
+   layout), not on the title itself: the spacing tokens are in em, so on a 3em
+   heading they would come out three times larger than everywhere else. */
+.main-content .container > .display + * {
     margin-top: var(--spacing-3xl);
 }
 
@@ -133,6 +137,116 @@
     margin-top: var(--spacing-3xl);
     margin-bottom: var(--spacing-3xl);
 }
+/* ========================================
+   6. Space Between Sections
+   ======================================== */
+
+/* One rule for every page: any section that follows another section, in the
+   page container or in the main column beside a sidebar, gets space above it. Nothing needs to change when a section
+   is added, removed, or reordered. Pages that put a separator between two
+   sections are not affected, because the separator is not a section (it has
+   its own spacing in section 5). Use a smaller token, such as --spacing-2xl,
+   for a tighter page. */
+.main-content .container > section + section,
+.main-content .main-column > section + section {
+    margin-top: var(--spacing-3xl);
+}
+
+/* ========================================
+   7. Subheading Color
+   ======================================== */
+
+/* Every H3 in the page content uses the secondary heading color, so a new
+   subheading needs no extra class. It is set here, on the element, so it also
+   outranks the color a heading class such as .heading-medium would apply.
+   Size, weight, and spacing still come from the heading class in the HTML. */
+.main-content h3 {
+    color: var(--color-text-heading-secondary);
+}
+
+/* ========================================
+   8. Heading Icons
+   ======================================== */
+
+/* A small image in front of a heading, with a light and a dark version:
+
+     <h3 class="heading-medium"><img src="..." alt="..." class="heading-icon heading-icon--light"><img src="..." alt="..." class="heading-icon heading-icon--dark">Heading text</h3>
+
+   Keep the two images and the text on one line with no spaces between them.
+   A space would show as an extra gap in one theme but not the other.
+
+   The height is in em, so the icon scales with the heading's text size and
+   with the reader's text size. The negative vertical margin keeps a tall icon
+   from making the heading's line taller than its text. */
+.heading-icon {
+    /* Stated on purpose: the site's image reset makes images block-level, and a
+       block-level icon sits above the heading text instead of in front of it. */
+    display: inline;
+    height: 1.7em;
+    width: auto;
+    margin-right: var(--spacing-sm);
+    margin-block: -0.4em;
+    vertical-align: -0.4em;
+}
+
+.heading-icon--dark {
+    display: none;
+}
+
+[data-theme="dark"] .heading-icon--light {
+    display: none;
+}
+
+[data-theme="dark"] .heading-icon--dark {
+    display: inline;
+}
+
+/* ========================================
+   9. Links with a Trailing Icon
+   ======================================== */
+
+/* links.css makes a.trailing-icon inline-flex, which keeps the text and the icon
+   as two separate boxes. When the link text wraps onto a second line, the icon
+   stays at the far end of the box, centered between the lines and detached from
+   the last word.
+
+   The fix has two parts, and a link opts in by wrapping its last word and its
+   icon in <span class="trailing-icon__end">:
+
+     <a class="inline-link trailing-icon" ...>Art Institute of <span class="trailing-icon__end">Chicago<img ... class="external-link-icon"></span></a>
+
+   1. The link becomes inline-block. The text and the icon are then ordinary
+      inline content inside one box, so the icon follows the last character
+      wherever the text ends. The hover and focus shapes stay a single clean
+      rounded box, as links.css draws them, even when the link wraps. (A plain
+      inline link would be drawn in broken pieces, one per line.)
+   2. The span cannot wrap, so the last word and the icon always stay together.
+      A browser may otherwise break a line between a word and an image, and
+      leave the icon alone at the start of the next line.
+
+   Links without the span are left exactly as they were. The span replaces the
+   space before the icon, so its margin below adds back the gap that links.css
+   normally makes (its flex gap plus the icon's own margin).
+
+   One difference from an inline link: when the link wraps, it fills the line,
+   so any text after it (such as a note in parentheses) starts on the next line. */
+.main-content a.trailing-icon:has(.trailing-icon__end) {
+    display: inline-block;
+    max-width: 100%;
+
+    /* Without this, a list bullet lines up with the LAST line of a wrapped link
+       instead of the first. */
+    vertical-align: top;
+}
+
+.trailing-icon__end {
+    white-space: nowrap;
+}
+
+.trailing-icon__end .external-link-icon {
+    margin-left: calc(6px + var(--spacing-xs));
+}
+
 /* Logo: one version per theme, centered */
 .display img {
     display: block;

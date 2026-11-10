@@ -17,12 +17,24 @@
      </a>
 ============================================================================= */
 
-/* Up to 150px wide, and it shrinks on narrow screens so it never covers the toggle */
+/* Up to 150px wide, and it shrinks on narrow screens so it never covers the toggle.
+
+   The global link style (links.css) gives every link padding and a matching
+   negative margin. Both are set here on purpose, so the logo image stays exactly
+   where it is: the padding is the room between the logo and the edge of the round
+   hover and focus shape, and the negative margins pull it back out again.
+   box-sizing: content-box makes the 150px the width of the image itself. */
 .microsite-header__logo {
+    --logo-halo: var(--spacing-sm);
+
     flex: 0 1 150px;
+    box-sizing: content-box;
     min-width: 0;
-    margin-right: auto;
-    margin-top: 2px; /* Same 2px offset the toggle has, so the two line up */
+    padding: var(--logo-halo);
+    /* top: the toggle's own 2px offset, so the two line up
+       right: auto, which pushes the toggle to the right edge
+       bottom, left: pulled back by the padding */
+    margin: calc(2px - var(--logo-halo)) auto calc(-1 * var(--logo-halo)) calc(-1 * var(--logo-halo));
 }
 
 .microsite-header__logo img {
@@ -49,4 +61,20 @@
    center it in the taller row. A shorter logo is still centered beside it. */
 .microsite-header__actions {
     align-self: flex-start;
+}
+
+/* Round hover and keyboard focus shape (a circle for a square logo, a pill for a
+   wide one). The outline follows the corner radius in current browsers.
+
+   links.css sets a rounded-square radius with a long selector,
+   a:hover:not(.toc-link):not(.link--icon-only), which outranks a short one. These
+   selectors are longer still so the round shape wins, without touching links.css. */
+.microsite-header__logo {
+    border-radius: 9999px;
+}
+
+.microsite-header .microsite-header__content .microsite-header__logo:hover,
+.microsite-header .microsite-header__content .microsite-header__logo:focus,
+.microsite-header .microsite-header__content .microsite-header__logo:focus-visible {
+    border-radius: 9999px;
 }

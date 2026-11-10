@@ -23,13 +23,11 @@
             return;
         }
 
-        const header = document.querySelector('.header');
+        // The portfolio's header is .header; microsite pages use .microsite-header.
+        // The header is only needed to offset smooth scrolling, so a page without
+        // one still gets the sticky sidebar and the highlighting.
+        const header = document.querySelector('.header, .microsite-header');
         console.log('Header:', header);
-
-        if (!header) {
-            console.error('Header not found');
-            return;
-        }
         
         // Get all TOC links and their parent list items
         const tocLinks = sidebar.querySelectorAll('.toc-link');
@@ -143,7 +141,10 @@
                 const targetSection = document.getElementById(targetId);
                 
                 if (targetSection) {
-                    const headerHeight = header.offsetHeight;
+                    // A header that scrolls away with the page needs no offset
+                    const headerPosition = header ? window.getComputedStyle(header).position : '';
+                    const headerStaysOnScreen = headerPosition === 'fixed' || headerPosition === 'sticky';
+                    const headerHeight = headerStaysOnScreen ? header.offsetHeight : 0;
                     const targetPosition = targetSection.offsetTop - headerHeight - 24;
                     
                     window.scrollTo({
