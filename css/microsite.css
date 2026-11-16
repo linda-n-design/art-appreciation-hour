@@ -19,7 +19,7 @@
    7. Subheading Color
    8. Heading Icons
    9. Links with a Trailing Icon
-
+   10. Event Details
 ============================================================================= */
 
 /* ========================================
@@ -266,4 +266,27 @@
 
 [data-theme="dark"] .display .logo--dark {
     display: block;
+}
+/* ========================================
+   10. Event Details
+   ======================================== */
+
+/* The two time lines (visitor's time, then host's time) say the same thing,
+   so they stay close together. The line after them (Artwork focus) gets
+   more space above it. Any <ul data-event-start="..."> gets this. */
+.main-content ul[data-event-start] > li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.main-content ul[data-event-start] > li[data-event-host] + li {
+    margin-top: var(--spacing-lg);
+}
+
+.main-content ul[data-event-start] > li:last-child {
+    margin-bottom: 0;
+}
+/* Space between the event details and whatever follows them
+   (such as "Take a look at ... ahead of time:") */
+.main-content ul[data-event-start] + * {
+    margin-top: var(--spacing-xl);
 }
